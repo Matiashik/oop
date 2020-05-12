@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace pr1
+namespace pr2
 {
     public partial class Form1 : Form
     {
@@ -17,17 +17,20 @@ namespace pr1
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.textBox1.Text != "") this.textBox2.Text = "Привет, " + this.textBox1.Text + "!";
-        }
+            double a;
+            try
+            {
+                a = double.Parse(textBox3.Text);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+            this.label4.Text = (a * 1.61).ToString();
         }
     }
 }

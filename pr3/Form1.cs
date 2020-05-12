@@ -8,26 +8,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace pr1
+namespace pr3
 {
     public partial class Form1 : Form
     {
+        private bool a = false;
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.textBox1.Text != "") this.textBox2.Text = "Привет, " + this.textBox1.Text + "!";
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+            if (a) this.Close();
+            else 
+            { 
+                this.button1.Text = "Вы нажа-а-а-а-ли меня!!!!";
+                a = true;
+            }
         }
     }
 }

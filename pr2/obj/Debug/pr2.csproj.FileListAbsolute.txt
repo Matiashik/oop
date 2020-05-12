@@ -1,0 +1,10 @@
+C:\myfo\oop\pr2\bin\Debug\pr2.exe.config
+C:\myfo\oop\pr2\bin\Debug\pr2.exe
+C:\myfo\oop\pr2\bin\Debug\pr2.pdb
+C:\myfo\oop\pr2\obj\Debug\pr2.csprojAssemblyReference.cache
+C:\myfo\oop\pr2\obj\Debug\pr2.Properties.Resources.resources
+C:\myfo\oop\pr2\obj\Debug\pr2.csproj.GenerateResource.cache
+C:\myfo\oop\pr2\obj\Debug\pr2.csproj.CoreCompileInputs.cache
+C:\myfo\oop\pr2\obj\Debug\pr2.exe
+C:\myfo\oop\pr2\obj\Debug\pr2.pdb
+C:\myfo\oop\pr2\obj\Debug\pr2.Form1.resources
