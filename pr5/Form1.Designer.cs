@@ -34,9 +34,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(244, 236);
+            this.textBox1.Location = new System.Drawing.Point(602, 294);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(268, 20);
+            this.textBox1.Size = new System.Drawing.Size(74, 20);
             this.textBox1.TabIndex = 0;
             // 
             // Form1
@@ -47,6 +47,8 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.ResumeLayout(false);
             this.PerformLayout();
         }

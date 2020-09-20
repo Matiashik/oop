@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,29 +12,54 @@ namespace pr5
     abstract class Shape
     {
         protected int x;
-        public int X { get; set; }
+
+        public int X
+        {
+            get => x;
+            set => x = value;
+        }
+
         protected int y;
-        public int Y { get; set; }
+
+        public int Y
+        {
+            get => y;
+            set => y = value;
+        }
+
         protected static int r;
-        public static int R { get; set; }
+
+        public static int R
+        {
+            get => r;
+            set => r = value;
+        }
+
         protected static Color color;
-        public static Color Color { get; set; }
+
+        public static Color Color
+        {
+            get => color;
+            set => color = value;
+        }
 
         protected Shape(int x, int y)
         {
-            X = x;
-            Y = y;
+            this.x = x;
+            this.y = y;
         }
 
         static Shape()
         {
             color = Color.Black;
-            R = 3;
+            R = 15;
         }
 
-        public abstract void Draw(Graphics graphics);
+        public virtual void Draw(Graphics graphics)
+        {
+        }
 
-        public abstract bool IsInside(int x1, int y1);
+        public virtual bool IsInside(int x1, int y1) => false;
     }
 
     class Circle : Shape
@@ -44,12 +70,13 @@ namespace pr5
 
         public override bool IsInside(int x1, int y1)
         {
-            int xx = Math.Abs(x1 - X);
-            int yy = Math.Abs(y1 - Y);
+            int xx = Math.Abs(x1 - x);
+            int yy = Math.Abs(y1 - y);
             return Math.Sqrt(xx * xx + yy * yy) <= R;
         }
 
-        public override void Draw(Graphics graphics) => graphics.DrawEllipse(new Pen(color), x, y, 2 * R, 2 * R);
+        public override void Draw(Graphics graphics) =>
+            graphics.DrawEllipse(new Pen(color), x - R, y - R, 2 * R, 2 * R);
     }
 
     class Square : Shape
@@ -89,29 +116,36 @@ namespace pr5
         {
             PointF[] plist = new PointF[3];
             plist[0] = new PointF(x, y - R);
-            plist[1] = new PointF(x - R * (float) Math.Sin(60), y + R / 2);
-            plist[2] = new PointF(x + R * (float) Math.Sin(60), y + R / 2);
+            plist[1] = new PointF(x - R * (float) Math.Sin(1.0472), y + R / 2);
+            plist[2] = new PointF(x + R * (float) Math.Sin(1.0472), y + R / 2);
             graphics.DrawPolygon(new Pen(color), plist);
         }
 
         public override bool IsInside(int x1, int y1)
         {
-            double dis((float x, float y) a, (float x, float y) b) =>
-                Math.Sqrt(Math.Abs(a.x - b.x) * Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y) * Math.Abs(a.y - b.y));
+            double Dis((float x, float y) a, (float x, float y) b) =>
+                Math.Sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 
-            double p((float x, float y) a, (float x, float y) b, (float x, float y) c) =>
-                (dis(a, b) + dis(b, c) + dis(a, c)) / 2;
+            double Sqr(double s1, double s2, double s3)
+            {
+                double p = (s1 + s2 + s3) / 2;
+                return Math.Sqrt(p * (p - s1) * (p - s2) * (p - s3));
+            }
 
-            double sqr((float x, float y) a, (float x, float y) b, (float x, float y) c) =>
-                Math.Sqrt(p(a, b, c) * (p(a, b, c) - dis(a, b)) * (p(a, b, c) - dis(b, c)) * (p(a, b, c) - dis(a, c)));
-
-            return sqr((x, y - R), (x - R * (float) Math.Sin(60), y + R / 2), (x1, y1)) +
-                   sqr((x, y - R), (x + R * (float) Math.Sin(60), y + R / 2), (x1, y1)) +
-                   sqr((x + R * (float) Math.Sin(60), y + R / 2), (x - R * (float) Math.Sin(60), y + R / 2),
-                       (x1, y1)) ==
-                   sqr((x + R * (float) Math.Sin(60), y + R / 2), (x - R * (float) Math.Sin(60), y + R / 2),
-                       (x, y - R));
-            
+            return Math.Abs(Sqr(Dis((x, y - R), (x1, y1)),
+                                Dis((x - R * (float) Math.Sin(1.0472), y + R / 2), (x1, y1)),
+                                Dis((x, y - R), (x - R * (float) Math.Sin(1.0472), y + R / 2))) +
+                            Sqr(Dis((x, y - R), (x1, y1)),
+                                Dis((x + R * (float) Math.Sin(1.0472), y + R / 2), (x1, y1)),
+                                Dis((x, y - R), (x + R * (float) Math.Sin(1.0472), y + R / 2))) +
+                            Sqr(Dis((x + R * (float) Math.Sin(1.0472), y + R / 2), (x1, y1)),
+                                Dis((x - R * (float) Math.Sin(1.0472), y + R / 2), (x1, y1)),
+                                Dis((x + R * (float) Math.Sin(1.0472), y + R / 2),
+                                    (x - R * (float) Math.Sin(1.0472), y + R / 2))) -
+                            Sqr(Dis((x + R * (float) Math.Sin(1.0472), y + R / 2), (x, y - R)),
+                                Dis((x - R * (float) Math.Sin(1.0472), y + R / 2), (x, y - R)),
+                                Dis((x + R * (float) Math.Sin(1.0472), y + R / 2),
+                                    (x - R * (float) Math.Sin(1.0472), y + R / 2)))) < 0.0001;
         }
     }
 }
