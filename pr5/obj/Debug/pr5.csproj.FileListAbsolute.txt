@@ -1,0 +1,10 @@
+C:\myfo\oop\pr5\bin\Debug\pr5.exe.config
+C:\myfo\oop\pr5\bin\Debug\pr5.exe
+C:\myfo\oop\pr5\bin\Debug\pr5.pdb
+C:\myfo\oop\pr5\obj\Debug\pr5.csprojAssemblyReference.cache
+C:\myfo\oop\pr5\obj\Debug\pr5.Properties.Resources.resources
+C:\myfo\oop\pr5\obj\Debug\pr5.csproj.GenerateResource.cache
+C:\myfo\oop\pr5\obj\Debug\pr5.csproj.CoreCompileInputs.cache
+C:\myfo\oop\pr5\obj\Debug\pr5.exe
+C:\myfo\oop\pr5\obj\Debug\pr5.pdb
+C:\myfo\oop\pr5\obj\Debug\pr5.Form1.resources
