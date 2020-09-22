@@ -24,7 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a4608ad1-fe81-400f-b1cd-399ac32dcc9e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.pdb" afterDir="false" />
@@ -90,6 +89,8 @@
       <updated>1600590881715</updated>
       <workItem from="1600590885372" duration="8070000" />
       <workItem from="1600673448364" duration="3408000" />
+      <workItem from="1600677348829" duration="117000" />
+      <workItem from="1600770064350" duration="172000" />
     </task>
     <servers />
   </component>
@@ -112,22 +113,22 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1582" height="281" key="GridCell.Tab.0.bottom" timestamp="1600676901680">
+    <state width="1582" height="281" key="GridCell.Tab.0.bottom" timestamp="1600770238054">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1582" height="281" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1600676901680" />
-    <state width="1582" height="281" key="GridCell.Tab.0.center" timestamp="1600676901680">
+    <state width="1582" height="281" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1600770238054" />
+    <state width="1582" height="281" key="GridCell.Tab.0.center" timestamp="1600770238054">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1582" height="281" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1600676901680" />
-    <state width="1582" height="281" key="GridCell.Tab.0.left" timestamp="1600676901680">
+    <state width="1582" height="281" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1600770238054" />
+    <state width="1582" height="281" key="GridCell.Tab.0.left" timestamp="1600770238054">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1582" height="281" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1600676901680" />
-    <state width="1582" height="281" key="GridCell.Tab.0.right" timestamp="1600676901680">
+    <state width="1582" height="281" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1600770238054" />
+    <state width="1582" height="281" key="GridCell.Tab.0.right" timestamp="1600770238054">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1582" height="281" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1600676901680" />
+    <state width="1582" height="281" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1600770238054" />
     <state width="1582" height="372" key="GridCell.Tab.1.bottom" timestamp="1600599012747">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>

@@ -22,6 +22,8 @@ namespace pr5
         public Form1()
         {
             InitializeComponent();
+            // ReSharper disable once VirtualMemberCallInConstructor
+            DoubleBuffered = true;
         }
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
@@ -33,7 +35,7 @@ namespace pr5
                         if (sp.IsInside(e.X, e.Y))
                             return;
                     _splist.Add(new Circle(e.X, e.Y));
-                    Invalidate();
+                    Refresh();
                     break;
 
                 case MouseButtons.Right:
@@ -44,7 +46,7 @@ namespace pr5
                             break;
                         }
 
-                    Invalidate();
+                    Refresh();
                     break;
             }
         }
@@ -79,11 +81,9 @@ namespace pr5
             if (_mousePressed && _pindex.Count != 0)
             {
                 foreach (var el in _pindex)
-                {
                     (_splist[el.i].X, _splist[el.i].Y) = (e.X - el.dx, e.Y - el.dy);
-                }
 
-                Invalidate();
+                Refresh();
             }
         }
     }
