@@ -27,6 +27,30 @@ namespace pr5
             set => y = value;
         }
 
+        protected bool isPressed = false;
+
+        public bool IsPressed
+        {
+            get => isPressed;
+            set => isPressed = value;
+        }
+
+        protected (int dx, int dy) dif;
+
+        public (int dx, int dy) Dif
+        {
+            get => dif;
+            set => dif = value;
+        }
+
+        protected bool isTop = false;
+
+        public bool IsTop
+        {
+            get => isTop;
+            set => isTop = value;
+        }
+
         protected static int r;
 
         public static int R
@@ -52,7 +76,7 @@ namespace pr5
         static Shape()
         {
             color = Color.Black;
-            R = 15;
+            R = 30;
         }
 
         public virtual void Draw(Graphics graphics)

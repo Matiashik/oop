@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace pr5
 {
@@ -16,25 +17,71 @@ namespace pr5
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         List<Shape> _splist = new List<Shape>(); //shapes
 
-        bool _mousePressed = true;
-        List<(int i, int dx, int dy)> _pindex = new List<(int i, int dx, int dy)>(); //pressed shapes
+        private int _shapeType;
 
         public Form1()
         {
             InitializeComponent();
             // ReSharper disable once VirtualMemberCallInConstructor
             DoubleBuffered = true;
+            circleToolStripMenuItem.Checked = true;
         }
 
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            foreach (var sp in _splist)
+            {
+                sp.Draw(e.Graphics);
+                sp.IsTop = false;
+            }
+
+            for (int i = 0; i < _splist.Count; i++)
+            {
+                for (int j = i + 1; j < _splist.Count; j++)
+                {
+                    var t1 = _splist[i];
+                    var t2 = _splist[j];
+                    double k = ((double) t1.Y - t2.Y) / (t2.X - t2.X);
+                    double b = t1.Y - k * t1.X;
+                    for (int f = 0; f < _splist.Count; f++) if (!(_splist[f].Y < _splist[f].X * k+ b) && f != i && f != j) return;
+                    _splist[i].IsTop = true;
+                    _splist[j].IsTop = true;
+                    e.Graphics.DrawLine(new Pen(Color.Black), t1.X, t1.Y, t2.X, t2.Y);
+                }
+            }
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             switch (e.Button)
             {
                 case MouseButtons.Left:
                     foreach (var sp in _splist)
                         if (sp.IsInside(e.X, e.Y))
+                        {
+                            for (int i = 0; i < _splist.Count; i++)
+                                if (_splist[i].IsInside(e.X, e.Y))
+                                {
+                                    _splist[i].IsPressed = true;
+                                    _splist[i].Dif = (e.X - _splist[i].X, e.Y - _splist[i].Y);
+                                }
+
                             return;
-                    _splist.Add(new Circle(e.X, e.Y));
+                        }
+
+                    switch (_shapeType)
+                    {
+                        case 1:
+                            _splist.Add(new Triangle(e.X, e.Y));
+                            break;
+                        case 2:
+                            _splist.Add(new Square(e.X, e.Y));
+                            break;
+                        default:
+                            _splist.Add(new Circle(e.X, e.Y));
+                            break;
+                    }
+
                     Refresh();
                     break;
 
@@ -51,40 +98,44 @@ namespace pr5
             }
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-            foreach (var sp in _splist)
-            {
-                sp.Draw(e.Graphics);
-            }
-        }
-
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                _mousePressed = true;
-                for (int i = 0; i < _splist.Count; i++)
-                    if (_splist[i].IsInside(e.X, e.Y))
-                        _pindex.Add((i, e.X - _splist[i].X, e.Y - _splist[i].Y));
-            }
-        }
-
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            _mousePressed = false;
-            _pindex = new List<(int i, int dx, int dy)>();
+            foreach (var el in _splist)
+                if (el.IsPressed)
+                    el.IsPressed = false;
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_mousePressed && _pindex.Count != 0)
-            {
-                foreach (var el in _pindex)
-                    (_splist[el.i].X, _splist[el.i].Y) = (e.X - el.dx, e.Y - el.dy);
+            foreach (var el in _splist)
+                if (el.IsPressed)
+                    (el.X, el.Y) = (e.X - el.Dif.dx, e.Y - el.Dif.dy);
 
-                Refresh();
-            }
+            Refresh();
+        }
+
+        private void circleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _shapeType = 0;
+            circleToolStripMenuItem.Checked = true;
+            triangleToolStripMenuItem.Checked = false;
+            squareToolStripMenuItem.Checked = false;
+        }
+
+        private void triangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _shapeType = 1;
+            circleToolStripMenuItem.Checked = false;
+            triangleToolStripMenuItem.Checked = true;
+            squareToolStripMenuItem.Checked = false;
+        }
+
+        private void squareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _shapeType = 2;
+            circleToolStripMenuItem.Checked = false;
+            triangleToolStripMenuItem.Checked = false;
+            squareToolStripMenuItem.Checked = true;
         }
     }
 }
