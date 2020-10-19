@@ -29,26 +29,67 @@ namespace pr5
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            foreach (var sp in _splist)
+            if (_splist.Count >= 3)
             {
-                sp.Draw(e.Graphics);
-                sp.IsTop = false;
-            }
-
-            for (int i = 0; i < _splist.Count; i++)
-            {
-                for (int j = i + 1; j < _splist.Count; j++)
+                for (int i = 0; i < _splist.Count; i++)
                 {
-                    var t1 = _splist[i];
-                    var t2 = _splist[j];
-                    double k = ((double) t1.Y - t2.Y) / (t2.X - t2.X);
-                    double b = t1.Y - k * t1.X;
-                    for (int f = 0; f < _splist.Count; f++) if (!(_splist[f].Y < _splist[f].X * k+ b) && f != i && f != j) return;
-                    _splist[i].IsTop = true;
-                    _splist[j].IsTop = true;
-                    e.Graphics.DrawLine(new Pen(Color.Black), t1.X, t1.Y, t2.X, t2.Y);
+                    for (int j = i + 1; j < _splist.Count; j++)
+                    {
+                        var t1 = _splist[i];
+                        var t2 = _splist[j];
+                        double k = ((double) t1.Y - t2.Y) / (t1.X - t2.X);
+                        double b = t1.Y - k * t1.X;
+                        var a = true;
+
+                        for (int f = 0; f < _splist.Count; f++)
+                        {
+                            if (f == i || f == j) continue;
+                            if (_splist[f].Y >= _splist[f].X * k + b)
+                            {
+                                a = false;
+                                break;
+                            }
+                        }
+
+                        if (!a)
+                        {
+                            a = true;
+                            for (int f = 0; f < _splist.Count; f++)
+                            {
+                                if (f == i || f == j) continue;
+                                if (_splist[f].Y <= _splist[f].X * k + b)
+                                {
+                                    a = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (a)
+                        {
+                            _splist[i].IsTop = true;
+                            _splist[j].IsTop = true;
+                            e.Graphics.DrawLine(new Pen(Color.Black), t1.X, t1.Y, t2.X, t2.Y);
+                        }
+                    }
+                }
+
+                for (int f = 0; f < _splist.Count; f++)
+                {
+                    var sp = _splist[f];
+                    if (!sp.IsTop && !sp.IsPressed)
+                    {
+                        _splist.RemoveAt(f);
+                        continue;
+                    }
+
+                    sp.Draw(e.Graphics);
+                    sp.IsTop = false;
                 }
             }
+            else
+                foreach (var sp in _splist)
+                    sp.Draw(e.Graphics);
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
