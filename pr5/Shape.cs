@@ -67,6 +67,9 @@ namespace pr5
             set => color = value;
         }
 
+        public static bool operator ==(Shape a, Shape b) => (a.X == b.X) && (a.Y == b.Y);
+        public static bool operator !=(Shape a, Shape b) => (a.X != b.X) || (a.Y != b.Y);
+
         protected Shape(int x, int y)
         {
             this.x = x;

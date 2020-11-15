@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace pr5
         List<Shape> _splist = new List<Shape>(); //shapes
 
         private int _shapeType;
+        private int _algorithmType;
 
         public Form1()
         {
@@ -25,66 +27,152 @@ namespace pr5
             // ReSharper disable once VirtualMemberCallInConstructor
             DoubleBuffered = true;
             circleToolStripMenuItem.Checked = true;
+            jarvisToolStripMenuItem.Checked = true;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (_splist.Count >= 3)
             {
-                for (int i = 0; i < _splist.Count; i++)
+                if (_algorithmType == 1)
                 {
-                    for (int j = i + 1; j < _splist.Count; j++)
+                    for (int i = 0; i < _splist.Count; i++)
                     {
-                        var t1 = _splist[i];
-                        var t2 = _splist[j];
-                        double k = ((double) t1.Y - t2.Y) / (t1.X - t2.X);
-                        double b = t1.Y - k * t1.X;
-                        var a = true;
-
-                        for (int f = 0; f < _splist.Count; f++)
+                        for (int j = i + 1; j < _splist.Count; j++)
                         {
-                            if (f == i || f == j) continue;
-                            if (_splist[f].Y >= _splist[f].X * k + b)
-                            {
-                                a = false;
-                                break;
-                            }
-                        }
+                            var t1 = _splist[i];
+                            var t2 = _splist[j];
+                            double k = ((double) t1.Y - t2.Y) / (t1.X - t2.X);
+                            double b = t1.Y - k * t1.X;
+                            var a = true;
 
-                        if (!a)
-                        {
-                            a = true;
                             for (int f = 0; f < _splist.Count; f++)
                             {
                                 if (f == i || f == j) continue;
-                                if (_splist[f].Y <= _splist[f].X * k + b)
+                                if (_splist[f].Y >= _splist[f].X * k + b)
                                 {
                                     a = false;
                                     break;
                                 }
                             }
+
+                            if (!a)
+                            {
+                                a = true;
+                                for (int f = 0; f < _splist.Count; f++)
+                                {
+                                    if (f == i || f == j) continue;
+                                    if (_splist[f].Y <= _splist[f].X * k + b)
+                                    {
+                                        a = false;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (a)
+                            {
+                                _splist[i].IsTop = true;
+                                _splist[j].IsTop = true;
+                                e.Graphics.DrawLine(new Pen(Color.Black), t1.X, t1.Y, t2.X, t2.Y);
+                            }
+                        }
+                    }
+
+                    for (int f = 0; f < _splist.Count; f++)
+                    {
+                        var sp = _splist[f];
+                        if (!sp.IsTop && !sp.IsPressed)
+                        {
+                            _splist.RemoveAt(f);
+                            continue;
                         }
 
-                        if (a)
-                        {
-                            _splist[i].IsTop = true;
-                            _splist[j].IsTop = true;
-                            e.Graphics.DrawLine(new Pen(Color.Black), t1.X, t1.Y, t2.X, t2.Y);
-                        }
+                        sp.Draw(e.Graphics);
+                        sp.IsTop = false;
                     }
                 }
 
-                for (int f = 0; f < _splist.Count; f++)
+                if (_algorithmType == 0)
                 {
-                    var sp = _splist[f];
-                    if (!sp.IsTop && !sp.IsPressed)
+                    double Dist(Shape a, Shape b) => Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
+
+                    (double X, double Y) Vector(Shape str, Shape end) => (end.X - str.X, end.Y - str.Y);
+
+                    double Angle(Shape zr, Shape nw, Shape nx) =>
+                        nw == nx
+                            ? 0
+                            : Math.Acos((Vector(nw, zr).X * Vector(nw, nx).X + Vector(nw, zr).Y * Vector(nw, nx).Y) /
+                                        (Dist(nw, zr) * Dist(nw, nx)));
+
+                    var spls = new List<Shape>();
+
                     {
-                        _splist.RemoveAt(f);
-                        continue;
+                        var p = _splist[0];
+                        foreach (var sp in _splist)
+                        {
+                            if (sp.Y < p.Y) p = sp;
+                            else if (sp.Y == p.Y)
+                                if (p.X > sp.X)
+                                    p = sp;
+                        }
+
+                        p.IsTop = true;
+                        spls.Add(p);
+                        foreach (var sp in _splist)
+                        {
+                            if (Angle(new Circle(0, spls[0].Y), spls[0], sp) >
+                                Angle(new Circle(0, spls[0].Y), spls[0], p)) p = sp;
+                            // ReSharper disable once CompareOfFloatsByEqualityOperator
+                            else if (Angle(new Circle(0, spls[0].Y), spls[0], sp) ==
+                                     Angle(new Circle(0, spls[0].Y), spls[0], p))
+                                if (Dist(spls[0], sp) > Dist(spls[0], p))
+                                    p = sp;
+                        }
+
+                        p.IsTop = true;
+                        spls.Add(p);
                     }
 
-                    sp.Draw(e.Graphics);
-                    sp.IsTop = false;
+                    e.Graphics.DrawLine(new Pen(Color.Black), spls[0].X, spls[0].Y, spls[1].X, spls[1].Y);
+
+                    {
+                        var i = 1;
+                        do
+                        {
+                            var nx = spls[i];
+                            foreach (var sp in _splist)
+                            {
+                                if (spls.Contains(sp) && sp != spls[0]) continue;
+                                if (Angle(spls[i - 1], spls[i], sp) >
+                                    Angle(spls[i - 1], spls[i], nx)) nx = sp;
+                                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                                else if (Angle(spls[i - 1], spls[i], sp) ==
+                                         Angle(spls[i - 1], spls[i], nx))
+                                    if (Dist(spls[i], sp) > Dist(spls[i], nx))
+                                        nx = sp;
+                            }
+
+                            nx.IsTop = true;
+                            spls.Add(nx);
+                            i++;
+                            e.Graphics.DrawLine(new Pen(Color.Black), spls[i - 1].X, spls[i - 1].Y, spls[i].X,
+                                spls[i].Y);
+                        } while (spls[0] != spls[i]);
+                    }
+
+                    for (int f = 0; f < _splist.Count; f++)
+                    {
+                        var sp = _splist[f];
+                        if (!sp.IsTop && !sp.IsPressed)
+                        {
+                            _splist.RemoveAt(f);
+                            continue;
+                        }
+
+                        sp.Draw(e.Graphics);
+                        sp.IsTop = false;
+                    }
                 }
             }
             else
@@ -151,7 +239,6 @@ namespace pr5
             foreach (var el in _splist)
                 if (el.IsPressed)
                     (el.X, el.Y) = (e.X - el.Dif.dx, e.Y - el.Dif.dy);
-
             Refresh();
         }
 
@@ -177,6 +264,21 @@ namespace pr5
             circleToolStripMenuItem.Checked = false;
             triangleToolStripMenuItem.Checked = false;
             squareToolStripMenuItem.Checked = true;
+        }
+
+
+        private void byDefinitionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _algorithmType = 1;
+            jarvisToolStripMenuItem.Checked = false;
+            byDefinitionToolStripMenuItem.Checked = true;
+        }
+
+        private void jarvisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _algorithmType = 0;
+            jarvisToolStripMenuItem.Checked = true;
+            byDefinitionToolStripMenuItem.Checked = false;
         }
     }
 }
