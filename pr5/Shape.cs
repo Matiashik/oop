@@ -59,9 +59,9 @@ namespace pr5
             set => r = value;
         }
 
-        protected static Color color;
+        protected Color color;
 
-        public static Color Color
+        public Color Color
         {
             get => color;
             set => color = value;
@@ -70,15 +70,15 @@ namespace pr5
         public static bool operator ==(Shape a, Shape b) => (a.X == b.X) && (a.Y == b.Y);
         public static bool operator !=(Shape a, Shape b) => (a.X != b.X) || (a.Y != b.Y);
 
-        protected Shape(int x, int y)
+        protected Shape(int x, int y, Color c)
         {
             this.x = x;
             this.y = y;
+            color = c;
         }
 
         static Shape()
         {
-            color = Color.Black;
             R = 30;
         }
 
@@ -91,7 +91,7 @@ namespace pr5
 
     class Circle : Shape
     {
-        public Circle(int x, int y) : base(x, y)
+        public Circle(int x, int y, Color c) : base(x, y, c)
         {
         }
 
@@ -103,12 +103,12 @@ namespace pr5
         }
 
         public override void Draw(Graphics graphics) =>
-            graphics.DrawEllipse(new Pen(color), x - R, y - R, 2 * R, 2 * R);
+            graphics.DrawEllipse(new Pen(color, 2), x - R, y - R, 2 * R, 2 * R);
     }
 
     class Square : Shape
     {
-        public Square(int x, int y) : base(x, y)
+        public Square(int x, int y, Color c) : base(x, y, c)
         {
         }
 
@@ -120,7 +120,7 @@ namespace pr5
             plist[1] = new PointF((float) (x + len / 2), (float) (y + len / 2));
             plist[2] = new PointF((float) (x + len / 2), (float) (y - len / 2));
             plist[3] = new PointF((float) (x - len / 2), (float) (y - len / 2));
-            graphics.DrawPolygon(new Pen(color), plist);
+            graphics.DrawPolygon(new Pen(color, 2), plist);
         }
 
         public override bool IsInside(int x1, int y1)
@@ -135,7 +135,7 @@ namespace pr5
 
     class Triangle : Shape
     {
-        public Triangle(int x, int y) : base(x, y)
+        public Triangle(int x, int y, Color c) : base(x, y, c)
         {
         }
 
@@ -145,7 +145,7 @@ namespace pr5
             plist[0] = new PointF(x, y - R);
             plist[1] = new PointF(x - R * (float) Math.Sin(1.0472), y + R / 2);
             plist[2] = new PointF(x + R * (float) Math.Sin(1.0472), y + R / 2);
-            graphics.DrawPolygon(new Pen(color), plist);
+            graphics.DrawPolygon(new Pen(color, 2), plist);
         }
 
         public override bool IsInside(int x1, int y1)

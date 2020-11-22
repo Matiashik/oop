@@ -15,11 +15,17 @@ namespace pr5
 {
     public partial class Form1 : Form
     {
+        #region Locals
+
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        // ReSharper disable once IdentifierTypo
         List<Shape> _splist = new List<Shape>(); //shapes
 
         private int _shapeType;
         private int _algorithmType;
+        private Color _topsColor = Color.Black;
+        private Color _lineColor = Color.Black;
+        private Color _insideColor = DefaultBackColor;
 
         public Form1()
         {
@@ -30,10 +36,21 @@ namespace pr5
             jarvisToolStripMenuItem.Checked = true;
         }
 
+        #endregion
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (_splist.Count >= 3)
             {
+                // ReSharper disable once InconsistentNaming
+                void swap(int a, int b)
+                {
+                    var c = _splist[a];
+                    _splist[a] = _splist[b];
+                    _splist[b] = c;
+                }
+                var spls = new List<Shape>();
+                
                 if (_algorithmType == 1)
                 {
                     for (int i = 0; i < _splist.Count; i++)
@@ -74,22 +91,11 @@ namespace pr5
                             {
                                 _splist[i].IsTop = true;
                                 _splist[j].IsTop = true;
-                                e.Graphics.DrawLine(new Pen(Color.Black), t1.X, t1.Y, t2.X, t2.Y);
+                                spls.Add(_splist[i]);
+                                spls.Add(_splist[j]);
+                                e.Graphics.DrawLine(new Pen(_lineColor, 2), t1.X, t1.Y, t2.X, t2.Y);
                             }
                         }
-                    }
-
-                    for (int f = 0; f < _splist.Count; f++)
-                    {
-                        var sp = _splist[f];
-                        if (!sp.IsTop && !sp.IsPressed)
-                        {
-                            _splist.RemoveAt(f);
-                            continue;
-                        }
-
-                        sp.Draw(e.Graphics);
-                        sp.IsTop = false;
                     }
                 }
 
@@ -105,8 +111,6 @@ namespace pr5
                             : Math.Acos((Vector(nw, zr).X * Vector(nw, nx).X + Vector(nw, zr).Y * Vector(nw, nx).Y) /
                                         (Dist(nw, zr) * Dist(nw, nx)));
 
-                    var spls = new List<Shape>();
-
                     {
                         var p = _splist[0];
                         foreach (var sp in _splist)
@@ -121,11 +125,11 @@ namespace pr5
                         spls.Add(p);
                         foreach (var sp in _splist)
                         {
-                            if (Angle(new Circle(0, spls[0].Y), spls[0], sp) >
-                                Angle(new Circle(0, spls[0].Y), spls[0], p)) p = sp;
+                            if (Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], sp) >
+                                Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], p)) p = sp;
                             // ReSharper disable once CompareOfFloatsByEqualityOperator
-                            else if (Angle(new Circle(0, spls[0].Y), spls[0], sp) ==
-                                     Angle(new Circle(0, spls[0].Y), spls[0], p))
+                            else if (Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], sp) ==
+                                     Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], p))
                                 if (Dist(spls[0], sp) > Dist(spls[0], p))
                                     p = sp;
                         }
@@ -134,7 +138,7 @@ namespace pr5
                         spls.Add(p);
                     }
 
-                    e.Graphics.DrawLine(new Pen(Color.Black), spls[0].X, spls[0].Y, spls[1].X, spls[1].Y);
+                    e.Graphics.DrawLine(new Pen(_lineColor, 2), spls[0].X, spls[0].Y, spls[1].X, spls[1].Y);
 
                     {
                         var i = 1;
@@ -156,29 +160,40 @@ namespace pr5
                             nx.IsTop = true;
                             spls.Add(nx);
                             i++;
-                            e.Graphics.DrawLine(new Pen(Color.Black), spls[i - 1].X, spls[i - 1].Y, spls[i].X,
+                            e.Graphics.DrawLine(new Pen(_lineColor, 2), spls[i - 1].X, spls[i - 1].Y, spls[i].X,
                                 spls[i].Y);
                         } while (spls[0] != spls[i]);
                     }
+                }
 
-                    for (int f = 0; f < _splist.Count; f++)
+                for (int f = 0; f < _splist.Count; f++)
+                {
+                    var sp = _splist[f];
+                    if (!sp.IsTop && !sp.IsPressed)
                     {
-                        var sp = _splist[f];
-                        if (!sp.IsTop && !sp.IsPressed)
-                        {
-                            _splist.RemoveAt(f);
-                            continue;
-                        }
-
-                        sp.Draw(e.Graphics);
-                        sp.IsTop = false;
+                        _splist.RemoveAt(f);
+                        continue;
                     }
+                    sp.Draw(e.Graphics);
+                    sp.IsTop = false;
+                }
+                
+                if (_insideColor != DefaultBackColor)
+                {
+                    foreach (var sp in spls)
+                        swap(spls.IndexOf(sp), _splist.IndexOf(sp));
+                    var a = new Point[_splist.Count];
+                    for(int i = 0; i < _splist.Count; i++)
+                        a[i] = new Point(_splist[i].X, _splist[i].Y);
+                    e.Graphics.FillPolygon(new SolidBrush(_insideColor), a);
                 }
             }
             else
                 foreach (var sp in _splist)
                     sp.Draw(e.Graphics);
         }
+
+        #region MouseEvents
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -198,20 +213,41 @@ namespace pr5
                             return;
                         }
 
+                    var spls = _splist.ToList();
                     switch (_shapeType)
                     {
                         case 1:
-                            _splist.Add(new Triangle(e.X, e.Y));
+                            _splist.Add(new Triangle(e.X, e.Y, _topsColor));
                             break;
                         case 2:
-                            _splist.Add(new Square(e.X, e.Y));
+                            _splist.Add(new Square(e.X, e.Y, _topsColor));
                             break;
                         default:
-                            _splist.Add(new Circle(e.X, e.Y));
+                            _splist.Add(new Circle(e.X, e.Y, _topsColor));
                             break;
                     }
 
                     Refresh();
+                    if (spls.Count == _splist.Count)
+                    {
+                        var fl = true;
+                        for (int i = 0; i < spls.Count; i++)
+                        {
+                            if (spls[i] != _splist[i])
+                            {
+                                fl = false;
+                                break;
+                            }
+                        }
+
+                        if (fl)
+                            foreach (var sp in _splist)
+                            {
+                                sp.IsPressed = true;
+                                sp.Dif = (e.X - sp.X, e.Y - sp.Y);
+                            }
+                    }
+
                     break;
 
                 case MouseButtons.Right:
@@ -242,12 +278,17 @@ namespace pr5
             Refresh();
         }
 
+        #endregion
+
+        #region MenuEvents
+
         private void circleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _shapeType = 0;
             circleToolStripMenuItem.Checked = true;
             triangleToolStripMenuItem.Checked = false;
             squareToolStripMenuItem.Checked = false;
+            Refresh();
         }
 
         private void triangleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -256,6 +297,7 @@ namespace pr5
             circleToolStripMenuItem.Checked = false;
             triangleToolStripMenuItem.Checked = true;
             squareToolStripMenuItem.Checked = false;
+            Refresh();
         }
 
         private void squareToolStripMenuItem_Click(object sender, EventArgs e)
@@ -264,14 +306,15 @@ namespace pr5
             circleToolStripMenuItem.Checked = false;
             triangleToolStripMenuItem.Checked = false;
             squareToolStripMenuItem.Checked = true;
+            Refresh();
         }
-
 
         private void byDefinitionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _algorithmType = 1;
             jarvisToolStripMenuItem.Checked = false;
             byDefinitionToolStripMenuItem.Checked = true;
+            Refresh();
         }
 
         private void jarvisToolStripMenuItem_Click(object sender, EventArgs e)
@@ -279,6 +322,38 @@ namespace pr5
             _algorithmType = 0;
             jarvisToolStripMenuItem.Checked = true;
             byDefinitionToolStripMenuItem.Checked = false;
+            Refresh();
         }
+
+        private void linesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+                _lineColor = colorDialog1.Color;
+            Refresh();
+        }
+
+        private void insideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+                _insideColor = colorDialog1.Color;
+            Refresh();
+        }
+
+        private void topsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+                _topsColor = colorDialog1.Color;
+            Refresh();
+        }
+
+        private void defaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _insideColor = DefaultBackColor;
+            _topsColor = Color.Black;
+            _lineColor = Color.Black;
+            Refresh();
+        }
+
+        #endregion
     }
 }
