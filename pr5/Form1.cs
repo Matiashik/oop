@@ -23,7 +23,6 @@ namespace pr5
 
         private int _shapeType;
         private int _algorithmType;
-        private Color _topsColor = Color.Black;
         private Color _lineColor = Color.Black;
         private Color _insideColor = DefaultBackColor;
 
@@ -49,8 +48,9 @@ namespace pr5
                     _splist[a] = _splist[b];
                     _splist[b] = c;
                 }
+
                 var spls = new List<Shape>();
-                
+
                 if (_algorithmType == 1)
                 {
                     for (int i = 0; i < _splist.Count; i++)
@@ -93,7 +93,7 @@ namespace pr5
                                 _splist[j].IsTop = true;
                                 spls.Add(_splist[i]);
                                 spls.Add(_splist[j]);
-                                e.Graphics.DrawLine(new Pen(_lineColor, 2), t1.X, t1.Y, t2.X, t2.Y);
+                                e.Graphics.DrawLine(new Pen(Color.Black), t1.X, t1.Y, t2.X, t2.Y);
                             }
                         }
                     }
@@ -125,11 +125,11 @@ namespace pr5
                         spls.Add(p);
                         foreach (var sp in _splist)
                         {
-                            if (Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], sp) >
-                                Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], p)) p = sp;
+                            if (Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], sp) >
+                                Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], p)) p = sp;
                             // ReSharper disable once CompareOfFloatsByEqualityOperator
-                            else if (Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], sp) ==
-                                     Angle(new Circle(0, spls[0].Y, _topsColor), spls[0], p))
+                            else if (Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], sp) ==
+                                     Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], p))
                                 if (Dist(spls[0], sp) > Dist(spls[0], p))
                                     p = sp;
                         }
@@ -138,7 +138,7 @@ namespace pr5
                         spls.Add(p);
                     }
 
-                    e.Graphics.DrawLine(new Pen(_lineColor, 2), spls[0].X, spls[0].Y, spls[1].X, spls[1].Y);
+                    e.Graphics.DrawLine(new Pen(Color.Black), spls[0].X, spls[0].Y, spls[1].X, spls[1].Y);
 
                     {
                         var i = 1;
@@ -160,7 +160,7 @@ namespace pr5
                             nx.IsTop = true;
                             spls.Add(nx);
                             i++;
-                            e.Graphics.DrawLine(new Pen(_lineColor, 2), spls[i - 1].X, spls[i - 1].Y, spls[i].X,
+                            e.Graphics.DrawLine(new Pen(Color.Black), spls[i - 1].X, spls[i - 1].Y, spls[i].X,
                                 spls[i].Y);
                         } while (spls[0] != spls[i]);
                     }
@@ -174,18 +174,9 @@ namespace pr5
                         _splist.RemoveAt(f);
                         continue;
                     }
+
                     sp.Draw(e.Graphics);
                     sp.IsTop = false;
-                }
-                
-                if (_insideColor != DefaultBackColor)
-                {
-                    foreach (var sp in spls)
-                        swap(spls.IndexOf(sp), _splist.IndexOf(sp));
-                    var a = new Point[_splist.Count];
-                    for(int i = 0; i < _splist.Count; i++)
-                        a[i] = new Point(_splist[i].X, _splist[i].Y);
-                    e.Graphics.FillPolygon(new SolidBrush(_insideColor), a);
                 }
             }
             else
@@ -217,13 +208,13 @@ namespace pr5
                     switch (_shapeType)
                     {
                         case 1:
-                            _splist.Add(new Triangle(e.X, e.Y, _topsColor));
+                            _splist.Add(new Triangle(e.X, e.Y, _lineColor, _insideColor));
                             break;
                         case 2:
-                            _splist.Add(new Square(e.X, e.Y, _topsColor));
+                            _splist.Add(new Square(e.X, e.Y, _lineColor, _insideColor));
                             break;
                         default:
-                            _splist.Add(new Circle(e.X, e.Y, _topsColor));
+                            _splist.Add(new Circle(e.X, e.Y, _lineColor, _insideColor));
                             break;
                     }
 
@@ -268,6 +259,7 @@ namespace pr5
             foreach (var el in _splist)
                 if (el.IsPressed)
                     el.IsPressed = false;
+            Refresh();
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -339,17 +331,9 @@ namespace pr5
             Refresh();
         }
 
-        private void topsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-                _topsColor = colorDialog1.Color;
-            Refresh();
-        }
-
         private void defaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _insideColor = DefaultBackColor;
-            _topsColor = Color.Black;
             _lineColor = Color.Black;
             Refresh();
         }

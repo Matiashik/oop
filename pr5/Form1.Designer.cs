@@ -41,7 +41,6 @@
             this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.topsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.menuStrip1.SuspendLayout();
@@ -114,7 +113,7 @@
             // 
             // colorToolStripMenuItem
             // 
-            this.colorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.linesToolStripMenuItem, this.insideToolStripMenuItem, this.topsToolStripMenuItem, this.defaultToolStripMenuItem});
+            this.colorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.linesToolStripMenuItem, this.insideToolStripMenuItem, this.defaultToolStripMenuItem});
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
             this.colorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.colorToolStripMenuItem.Text = "Color";
@@ -132,13 +131,6 @@
             this.insideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.insideToolStripMenuItem.Text = "Inside";
             this.insideToolStripMenuItem.Click += new System.EventHandler(this.insideToolStripMenuItem_Click);
-            // 
-            // topsToolStripMenuItem
-            // 
-            this.topsToolStripMenuItem.Name = "topsToolStripMenuItem";
-            this.topsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.topsToolStripMenuItem.Text = "Tops";
-            this.topsToolStripMenuItem.Click += new System.EventHandler(this.topsToolStripMenuItem_Click);
             // 
             // defaultToolStripMenuItem
             // 
@@ -170,8 +162,6 @@
         private System.Windows.Forms.ToolStripMenuItem defaultToolStripMenuItem;
 
         private System.Windows.Forms.ColorDialog colorDialog1;
-
-        private System.Windows.Forms.ToolStripMenuItem topsToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem insideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem linesToolStripMenuItem;

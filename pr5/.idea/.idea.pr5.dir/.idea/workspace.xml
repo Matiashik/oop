@@ -26,11 +26,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Form1.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.resx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Shape.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shape.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.csproj.GenerateResource.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.pdb" afterDir="false" />
     </list>
@@ -134,6 +132,9 @@
       <workItem from="1605613799119" duration="120000" />
       <workItem from="1606030347780" duration="3504000" />
       <workItem from="1606033898372" duration="740000" />
+      <workItem from="1606201586411" duration="82000" />
+      <workItem from="1606205196407" duration="51000" />
+      <workItem from="1606211495102" duration="947000" />
     </task>
     <servers />
   </component>
@@ -156,26 +157,26 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1741" height="214" key="GridCell.Tab.0.bottom" timestamp="1606034643438">
+    <state width="1741" height="214" key="GridCell.Tab.0.bottom" timestamp="1606212448119">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.bottom/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1606034643438" />
-    <state width="1741" height="214" key="GridCell.Tab.0.center" timestamp="1606034643438">
+    <state width="1741" height="214" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1606212448119" />
+    <state width="1741" height="214" key="GridCell.Tab.0.center" timestamp="1606212448119">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.center/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1606034643438" />
-    <state width="1741" height="214" key="GridCell.Tab.0.left" timestamp="1606034643438">
+    <state width="1741" height="214" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1606212448119" />
+    <state width="1741" height="214" key="GridCell.Tab.0.left" timestamp="1606212448118">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.left/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1606034643438" />
-    <state width="1741" height="214" key="GridCell.Tab.0.right" timestamp="1606034643438">
+    <state width="1741" height="214" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1606212448118" />
+    <state width="1741" height="214" key="GridCell.Tab.0.right" timestamp="1606212448119">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.right/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1606034643438" />
+    <state width="1741" height="214" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1606212448119" />
     <state width="2515" height="531" key="GridCell.Tab.1.bottom" timestamp="1605511532895">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
