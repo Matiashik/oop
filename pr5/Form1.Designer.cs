@@ -1,4 +1,6 @@
-﻿namespace pr5
+﻿using System.Windows.Forms;
+
+namespace pr5
 {
     partial class Form1
     {
@@ -42,6 +44,7 @@
             this.linesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.radiusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -106,7 +109,7 @@
             // 
             // oToolStripMenuItem
             // 
-            this.oToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.colorToolStripMenuItem});
+            this.oToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.colorToolStripMenuItem, this.radiusToolStripMenuItem});
             this.oToolStripMenuItem.Name = "oToolStripMenuItem";
             this.oToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.oToolStripMenuItem.Text = "Options";
@@ -139,6 +142,13 @@
             this.defaultToolStripMenuItem.Text = "Default";
             this.defaultToolStripMenuItem.Click += new System.EventHandler(this.defaultToolStripMenuItem_Click);
             // 
+            // radiusToolStripMenuItem
+            // 
+            this.radiusToolStripMenuItem.Name = "radiusToolStripMenuItem";
+            this.radiusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.radiusToolStripMenuItem.Text = "Radius";
+            this.radiusToolStripMenuItem.Click += new System.EventHandler(this.radiusToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -158,6 +168,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ToolStripMenuItem radiusToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem defaultToolStripMenuItem;
 

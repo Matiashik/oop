@@ -18,6 +18,9 @@
         <e p="Settings.Designer.cs" t="Include" />
         <e p="Settings.settings" t="Include" />
       </e>
+      <e p="Radius.cs" t="Include" />
+      <e p="Radius.Designer.cs" t="Include" />
+      <e p="Radius.resx" t="Include" />
       <e p="Shape.cs" t="Include" />
     </e>
     <e p="C:\Users\solom\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />

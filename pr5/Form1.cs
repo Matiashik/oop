@@ -26,6 +26,8 @@ namespace pr5
         private Color _lineColor = Color.Black;
         private Color _insideColor = DefaultBackColor;
 
+        #endregion
+        
         public Form1()
         {
             InitializeComponent();
@@ -34,9 +36,7 @@ namespace pr5
             circleToolStripMenuItem.Checked = true;
             jarvisToolStripMenuItem.Checked = true;
         }
-
-        #endregion
-
+        
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (_splist.Count >= 3)
@@ -337,7 +337,19 @@ namespace pr5
             _lineColor = Color.Black;
             Refresh();
         }
-
+        
+        private void radiusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new Radius()).Show();
+            Radius.RChanged += radius_Changed;
+        }
+        
         #endregion
+
+        private void radius_Changed(int r)
+        {
+            Shape.R = r;
+            Refresh();
+        }
     }
 }
