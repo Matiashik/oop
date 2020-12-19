@@ -4,6 +4,7 @@ namespace pr5
 {
     partial class Radius
     {
+        public static bool Opend = false;
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -32,7 +33,6 @@ namespace pr5
         private void InitializeComponent()
         {
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) (this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,36 +45,27 @@ namespace pr5
             this.trackBar1.Size = new System.Drawing.Size(422, 45);
             this.trackBar1.TabIndex = 5;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBar1.Value = Shape.R;
+            this.trackBar1.Value = 30;
             this.trackBar1.Scroll += trackBar1_Scroll;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(25, 60);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "label1";
             // 
             // Radius
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 72);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(456, 82);
             this.Controls.Add(this.trackBar1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(462, 111);
             this.MinimumSize = new System.Drawing.Size(462, 111);
             this.Name = "Radius";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Radius";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Radius_FormClosed);
             ((System.ComponentModel.ISupportInitialize) (this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
-
-        private System.Windows.Forms.Label label1;
 
         private System.Windows.Forms.TrackBar trackBar1;
 

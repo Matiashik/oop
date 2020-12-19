@@ -12,12 +12,18 @@ namespace pr5
             InitializeComponent();
             // ReSharper disable once VirtualMemberCallInConstructor
             DoubleBuffered = true;
+            Opend = true;
         }
 
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             RChanged?.Invoke(trackBar1.Value);
+        }
+
+        private void Radius_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Opend = false;
         }
     }
 }

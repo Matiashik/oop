@@ -9,6 +9,9 @@
       <e p="Form1.resx" t="Include" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
+      <e p="Popup.cs" t="Include" />
+      <e p="Popup.Designer.cs" t="Include" />
+      <e p="Popup.resx" t="Include" />
       <e p="pr5.csproj" t="IncludeRecursive" />
       <e p="Program.cs" t="Include" />
       <e p="Properties" t="Include">

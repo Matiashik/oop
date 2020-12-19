@@ -27,8 +27,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.resx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radius.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Radius.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radius.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Radius.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.Form1.resources" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.Form1.resources" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.csproj.CoreCompileInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.csproj.GenerateResource.cache" afterDir="false" />
@@ -47,11 +51,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Form1.Designer.cs" />
         <option value="$PROJECT_DIR$/Shape.cs" />
-        <option value="$PROJECT_DIR$/Form1.cs" />
         <option value="$PROJECT_DIR$/Radius.cs" />
         <option value="$PROJECT_DIR$/Radius.Designer.cs" />
+        <option value="$PROJECT_DIR$/Form1.Designer.cs" />
+        <option value="$PROJECT_DIR$/Popup.cs" />
+        <option value="$PROJECT_DIR$/Popup.Designer.cs" />
+        <option value="$PROJECT_DIR$/Form1.cs" />
       </list>
     </option>
   </component>
@@ -146,6 +152,9 @@
       <workItem from="1608015840674" duration="1908000" />
       <workItem from="1608018808284" duration="232000" />
       <workItem from="1608019054977" duration="1128000" />
+      <workItem from="1608028208520" duration="1789000" />
+      <workItem from="1608032845042" duration="198000" />
+      <workItem from="1608364538074" duration="5183000" />
     </task>
     <servers />
   </component>
@@ -168,26 +177,26 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1741" height="214" key="GridCell.Tab.0.bottom" timestamp="1608020191483">
+    <state width="1741" height="216" key="GridCell.Tab.0.bottom" timestamp="1608369772452">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.bottom/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1608020191483" />
-    <state width="1741" height="214" key="GridCell.Tab.0.center" timestamp="1608020191483">
+    <state width="1741" height="216" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1608369772452" />
+    <state width="1741" height="216" key="GridCell.Tab.0.center" timestamp="1608369772452">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.center/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1608020191483" />
-    <state width="1741" height="214" key="GridCell.Tab.0.left" timestamp="1608020191483">
+    <state width="1741" height="216" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1608369772452" />
+    <state width="1741" height="216" key="GridCell.Tab.0.left" timestamp="1608369772452">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.left/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1608020191483" />
-    <state width="1741" height="214" key="GridCell.Tab.0.right" timestamp="1608020191483">
+    <state width="1741" height="216" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1608369772452" />
+    <state width="1741" height="216" key="GridCell.Tab.0.right" timestamp="1608369772452">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.right/0.0.1600.900@0.0.1600.900" timestamp="1601368539057" />
-    <state width="1741" height="214" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1608020191483" />
+    <state width="1741" height="216" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1608369772452" />
     <state width="2515" height="531" key="GridCell.Tab.1.bottom" timestamp="1605511532895">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>

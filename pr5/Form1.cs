@@ -6,7 +6,9 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -25,9 +27,12 @@ namespace pr5
         private int _algorithmType;
         private Color _lineColor = Color.Black;
         private Color _insideColor = DefaultBackColor;
+        private Form _radius;
+        private bool _play = false;
+        private int _t = 1000;
 
         #endregion
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -35,8 +40,9 @@ namespace pr5
             DoubleBuffered = true;
             circleToolStripMenuItem.Checked = true;
             jarvisToolStripMenuItem.Checked = true;
+            Radius.RChanged += radius_Changed;
         }
-        
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (_splist.Count >= 3)
@@ -337,13 +343,77 @@ namespace pr5
             _lineColor = Color.Black;
             Refresh();
         }
-        
+
         private void radiusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            (new Radius()).Show();
-            Radius.RChanged += radius_Changed;
+            if (!Radius.Opend)
+            {
+                _radius = new Radius();
+                _radius.Show();
+            }
+            else
+            {
+                _radius.WindowState = FormWindowState.Normal;
+                _radius?.Activate();
+            }
         }
-        
+
+        private void toolStripPlay_Click(object sender, EventArgs e)
+        {
+            void Play()
+            {
+                var r = new Random();
+                while (_play)
+                {
+                    foreach (var sp in _splist)
+                    {
+                        if (!sp.IsPressed)
+                        {
+                            sp.X += r.Next(-100, 100)%2;
+                            sp.Y += r.Next(-100, 100)%2;
+                        }
+                    }
+
+                    Refresh();
+                    Thread.Sleep(_t);
+                }
+            }
+
+            _play = true;
+            Task.Run(Play);
+        }
+
+        private void toolStripStop_Click(object sender, EventArgs e)
+        {
+            _play = false;
+        }
+
+        private void toolStripTextBox1_Click(object sender, EventArgs e)
+        {
+            toolStripTextBox1.Text = "";
+        }
+
+        private void toolStripTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.Equals((char) Keys.Enter))
+            {
+                int t = _t;
+                try
+                {
+                    t = Convert.ToInt32(toolStripTextBox1.Text);
+                    if (t < 0) throw new Exception();
+                }
+                catch (Exception ex)
+                {
+                    (new Popup()).ShowDialog();
+                }
+                finally
+                {
+                    _t = t;
+                }
+            }
+        }
+
         #endregion
 
         private void radius_Changed(int r)
