@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace pr5
 {
@@ -29,7 +22,7 @@ namespace pr5
         private Color _insideColor = DefaultBackColor;
         private Form _radius;
         private bool _play = false;
-        private int _t = 1000;
+        private int _t = 10;
 
         #endregion
 
@@ -369,8 +362,8 @@ namespace pr5
                     {
                         if (!sp.IsPressed)
                         {
-                            sp.X += r.Next(-100, 100)%2;
-                            sp.Y += r.Next(-100, 100)%2;
+                            sp.X += r.Next(-1, 2);
+                            sp.Y += r.Next(-1, 2);
                         }
                     }
 
@@ -379,8 +372,11 @@ namespace pr5
                 }
             }
 
-            _play = true;
-            Task.Run(Play);
+            if (!_play)
+            {
+                _play = true;
+                Task.Run(Play);
+            }
         }
 
         private void toolStripStop_Click(object sender, EventArgs e)

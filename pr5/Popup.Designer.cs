@@ -40,7 +40,7 @@ namespace pr5
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(381, 23);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Пожалуйтса, введите целочисленное положительное числовое значение";
+            this.label1.Text = "Пожалуйтса, введите целочисленное неотрицательное числовое значение";
             // 
             // Popup
             // 

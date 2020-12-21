@@ -187,10 +187,10 @@ namespace pr5
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
-            this.toolStripTextBox1.Text = "1000";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(50, 25);
+            this.toolStripTextBox1.Text = "10";
+            this.toolStripTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBox1_KeyPress);
             this.toolStripTextBox1.Click += new System.EventHandler(this.toolStripTextBox1_Click);
-            this.toolStripTextBox1.KeyPress += new KeyPressEventHandler(this.toolStripTextBox1_KeyPress);
             // 
             // Form1
             // 
