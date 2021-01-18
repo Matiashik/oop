@@ -25,5 +25,10 @@ namespace pr5
         {
             Opend = false;
         }
+
+        private void Radius_Invalidate(object sender, InvalidateEventArgs e)
+        {
+            trackBar1.Value = Shape.R;
+        }
     }
 }

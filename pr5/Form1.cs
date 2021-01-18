@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,11 +22,12 @@ namespace pr5
 
         private int _shapeType;
         private int _algorithmType;
-        private Color _lineColor = Color.Black;
+        private Color _outsideColor = Color.Black;
         private Color _insideColor = DefaultBackColor;
         private Form _radius;
         private bool _play = false;
         private int _t = 10;
+        private Task _playT;
 
         #endregion
 
@@ -33,7 +38,10 @@ namespace pr5
             DoubleBuffered = true;
             circleToolStripMenuItem.Checked = true;
             jarvisToolStripMenuItem.Checked = true;
+            KeyPreview = true;
             Radius.RChanged += radius_Changed;
+            Directory.CreateDirectory("saves");
+            File.Create("saves/QuickSave.shp");
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -124,11 +132,11 @@ namespace pr5
                         spls.Add(p);
                         foreach (var sp in _splist)
                         {
-                            if (Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], sp) >
-                                Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], p)) p = sp;
+                            if (Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], sp) >
+                                Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], p)) p = sp;
                             // ReSharper disable once CompareOfFloatsByEqualityOperator
-                            else if (Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], sp) ==
-                                     Angle(new Circle(0, spls[0].Y, _lineColor, _insideColor), spls[0], p))
+                            else if (Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], sp) ==
+                                     Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], p))
                                 if (Dist(spls[0], sp) > Dist(spls[0], p))
                                     p = sp;
                         }
@@ -183,7 +191,7 @@ namespace pr5
                     sp.Draw(e.Graphics);
         }
 
-        #region MouseEvents
+        #region MouseAndKeyEvents
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -207,13 +215,13 @@ namespace pr5
                     switch (_shapeType)
                     {
                         case 1:
-                            _splist.Add(new Triangle(e.X, e.Y, _lineColor, _insideColor));
+                            _splist.Add(new Triangle(e.X, e.Y, _outsideColor, _insideColor));
                             break;
                         case 2:
-                            _splist.Add(new Square(e.X, e.Y, _lineColor, _insideColor));
+                            _splist.Add(new Square(e.X, e.Y, _outsideColor, _insideColor));
                             break;
                         default:
-                            _splist.Add(new Circle(e.X, e.Y, _lineColor, _insideColor));
+                            _splist.Add(new Circle(e.X, e.Y, _outsideColor, _insideColor));
                             break;
                     }
 
@@ -269,6 +277,76 @@ namespace pr5
             Refresh();
         }
 
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            FileStream fs = null;
+            var bf = new BinaryFormatter();
+            switch (e.KeyCode)
+            {
+                case Keys.F5:
+                    fs = new FileStream("saves/QuickSave.shp", FileMode.Create, FileAccess.Write);
+                    bf.Serialize(fs, _splist);
+                    bf.Serialize(fs, Shape.R);
+                    bf.Serialize(fs, _algorithmType);
+                    bf.Serialize(fs, _shapeType);
+                    bf.Serialize(fs, _insideColor);
+                    bf.Serialize(fs, _outsideColor);
+                    bf.Serialize(fs, toolStripTextBox1.Text);
+                    bf.Serialize(fs, _play);
+                    fs.Close();
+                    break;
+
+                case Keys.F6:
+                    try
+                    {
+                        fs = new FileStream("saves/QuickSave.shp", FileMode.Open, FileAccess.Read);
+                    }
+                    catch (Exception ex)
+                    {
+                        return;
+                    }
+
+                    // ReSharper disable once AssignNullToNotNullAttribute
+
+                    _splist = (List<Shape>) bf.Deserialize(fs);
+                    Shape.R = (int) bf.Deserialize(fs);
+                    _algorithmType = (int) bf.Deserialize(fs);
+                    _shapeType = (int) bf.Deserialize(fs);
+                    _insideColor = (Color) bf.Deserialize(fs);
+                    _outsideColor = (Color) bf.Deserialize(fs);
+                    toolStripTextBox1.Text = (string) bf.Deserialize(fs);
+                    _play = (bool) bf.Deserialize(fs);
+
+                    _radius?.Invalidate();
+                    switch (_shapeType)
+                    {
+                        case 0:
+                            circleToolStripMenuItem_Click(null, null);
+                            break;
+                        case 1:
+                            triangleToolStripMenuItem_Click(null, null);
+                            break;
+                        case 2:
+                            squareToolStripMenuItem_Click(null, null);
+                            break;
+                    }
+
+                    switch (_algorithmType)
+                    {
+                        case 0:
+                            jarvisToolStripMenuItem_Click(null, null);
+                            break;
+                        case 1:
+                            byDefinitionToolStripMenuItem_Click(null, null);
+                            break;
+                    }
+
+                    fs.Close();
+                    Refresh();
+                    break;
+            }
+        }
+
         #endregion
 
         #region MenuEvents
@@ -319,7 +397,7 @@ namespace pr5
         private void linesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
-                _lineColor = colorDialog1.Color;
+                _outsideColor = colorDialog1.Color;
             Refresh();
         }
 
@@ -333,7 +411,7 @@ namespace pr5
         private void defaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _insideColor = DefaultBackColor;
-            _lineColor = Color.Black;
+            _outsideColor = Color.Black;
             Refresh();
         }
 
@@ -374,8 +452,18 @@ namespace pr5
 
             if (!_play)
             {
+                try
+                {
+                    _playT.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    // ignored
+                }
+
                 _play = true;
-                Task.Run(Play);
+                _playT = new Task(Play);
+                _playT.Start();
             }
         }
 
@@ -386,28 +474,129 @@ namespace pr5
 
         private void toolStripTextBox1_Click(object sender, EventArgs e)
         {
-            toolStripTextBox1.Text = "";
+            toolStripTextBox1.SelectionStart = 0;
+            toolStripTextBox1.SelectionLength = toolStripTextBox1.Text.Length;
         }
 
-        private void toolStripTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        private void toolStripTextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (e.KeyChar.Equals((char) Keys.Enter))
+            if (toolStripTextBox1.Text == "") return;
+
+            var arr = new List<char> {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+
+            foreach (var i in toolStripTextBox1.Text)
             {
-                int t = _t;
-                try
+                if (!arr.Contains(i))
                 {
-                    t = Convert.ToInt32(toolStripTextBox1.Text);
-                    if (t < 0) throw new Exception();
-                }
-                catch (Exception ex)
-                {
-                    (new Popup()).ShowDialog();
-                }
-                finally
-                {
-                    _t = t;
+                    toolStripTextBox1.Text = _t.ToString();
+                    toolStripTextBox1.SelectionStart = toolStripTextBox1.Text.Length;
+                    toolStripTextBox1.SelectionLength = 0;
+                    return;
                 }
             }
+
+            _t = Convert.ToDouble(toolStripTextBox1.Text) > Int32.MaxValue
+                ? Int32.MaxValue
+                : Convert.ToInt32(toolStripTextBox1.Text);
+
+            if (_play)
+            {
+                _play = false;
+                toolStripPlay_Click(null, null);
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fdg = new SaveFileDialog();
+            fdg.InitialDirectory = Path.GetFullPath("saves");
+            // ReSharper disable once LocalizableElement
+            fdg.Filter = "Shape saves|*.shp";
+            while (true)
+            {
+                var dres = fdg.ShowDialog();
+                if (dres == DialogResult.OK)
+                    break;
+                if (dres == DialogResult.Cancel || dres == DialogResult.Abort)
+                    return;
+            }
+
+            var fs = new FileStream(fdg.FileName, FileMode.Create, FileAccess.Write);
+            var bf = new BinaryFormatter();
+            bf.Serialize(fs, _splist);
+            bf.Serialize(fs, Shape.R);
+            bf.Serialize(fs, _algorithmType);
+            bf.Serialize(fs, _shapeType);
+            bf.Serialize(fs, _insideColor);
+            bf.Serialize(fs, _outsideColor);
+            bf.Serialize(fs, toolStripTextBox1.Text);
+            bf.Serialize(fs, _play);
+            fs.Close();
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fdg = new OpenFileDialog();
+            fdg.InitialDirectory = Path.GetFullPath("saves");
+            // ReSharper disable once LocalizableElement
+            fdg.Filter = "Shape saves|*.shp";
+            while (true)
+            {
+                var dres = fdg.ShowDialog();
+                if (dres == DialogResult.OK)
+                    break;
+                if (dres == DialogResult.Cancel || dres == DialogResult.Abort)
+                    return;
+            }
+
+            FileStream fs = null;
+            var bf = new BinaryFormatter();
+            try
+            {
+                fs = new FileStream(fdg.FileName, FileMode.Open, FileAccess.Read);
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+
+            _splist = (List<Shape>) bf.Deserialize(fs);
+            Shape.R = (int) bf.Deserialize(fs);
+            _algorithmType = (int) bf.Deserialize(fs);
+            _shapeType = (int) bf.Deserialize(fs);
+            _insideColor = (Color) bf.Deserialize(fs);
+            _outsideColor = (Color) bf.Deserialize(fs);
+            toolStripTextBox1.Text = (string) bf.Deserialize(fs);
+            _play = (bool) bf.Deserialize(fs);
+
+            _radius?.Invalidate();
+            switch (_shapeType)
+            {
+                case 0:
+                    circleToolStripMenuItem_Click(null, null);
+                    break;
+                case 1:
+                    triangleToolStripMenuItem_Click(null, null);
+                    break;
+                case 2:
+                    squareToolStripMenuItem_Click(null, null);
+                    break;
+            }
+
+            switch (_algorithmType)
+            {
+                case 0:
+                    jarvisToolStripMenuItem_Click(null, null);
+                    break;
+                case 1:
+                    byDefinitionToolStripMenuItem_Click(null, null);
+                    break;
+            }
+
+            fs.Close();
+            Refresh();
         }
 
         #endregion

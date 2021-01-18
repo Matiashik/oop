@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace pr5
 {
+    [Serializable]
     abstract class Shape
     {
         protected int x;
@@ -27,7 +28,7 @@ namespace pr5
             set => y = value;
         }
 
-        protected bool isPressed = false;
+        [NonSerialized] protected bool isPressed = false;
 
         public bool IsPressed
         {
@@ -35,7 +36,7 @@ namespace pr5
             set => isPressed = value;
         }
 
-        protected (int dx, int dy) dif;
+        [NonSerialized] protected (int dx, int dy) dif;
 
         public (int dx, int dy) Dif
         {
@@ -43,7 +44,7 @@ namespace pr5
             set => dif = value;
         }
 
-        protected bool isTop = false;
+        [NonSerialized] protected bool isTop = false;
 
         public bool IsTop
         {
@@ -66,7 +67,7 @@ namespace pr5
             get => lineColor;
             set => lineColor = value;
         }
-        
+
         protected Color insideColor;
 
         public Color InsideColor
@@ -98,6 +99,7 @@ namespace pr5
         public virtual bool IsInside(int x1, int y1) => false;
     }
 
+    [Serializable]
     class Circle : Shape
     {
         public Circle(int x, int y, Color lc, Color ic) : base(x, y, lc, ic)
@@ -118,6 +120,7 @@ namespace pr5
         }
     }
 
+    [Serializable]
     class Square : Shape
     {
         public Square(int x, int y, Color lc, Color ic) : base(x, y, lc, ic)
@@ -146,6 +149,7 @@ namespace pr5
         }
     }
 
+    [Serializable]
     class Triangle : Shape
     {
         public Triangle(int x, int y, Color lc, Color ic) : base(x, y, lc, ic)

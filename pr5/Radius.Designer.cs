@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 namespace pr5
 {
@@ -45,8 +46,8 @@ namespace pr5
             this.trackBar1.Size = new System.Drawing.Size(422, 45);
             this.trackBar1.TabIndex = 5;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBar1.Value = 30;
-            this.trackBar1.Scroll += trackBar1_Scroll;
+            this.trackBar1.Value = Shape.R;
+            this.trackBar1.Scroll += new EventHandler(trackBar1_Scroll);
             // 
             // Radius
             // 
@@ -62,6 +63,7 @@ namespace pr5
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Radius";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Radius_FormClosed);
+            this.Invalidated += Radius_Invalidate;
             ((System.ComponentModel.ISupportInitialize) (this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
