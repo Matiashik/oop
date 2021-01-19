@@ -60,31 +60,29 @@ namespace pr5
             set => r = value;
         }
 
-        protected Color lineColor;
+        [NonSerialized] protected static Color lineColor;
 
-        public Color LineColor
+        public static Color LineColor
         {
             get => lineColor;
             set => lineColor = value;
         }
 
-        protected Color insideColor;
+        [NonSerialized] protected static Color insideColor;
 
-        public Color InsideColor
+        public static Color InsideColor
         {
             get => insideColor;
-            set => lineColor = value;
+            set => insideColor = value;
         }
 
         public static bool operator ==(Shape a, Shape b) => (a.X == b.X) && (a.Y == b.Y);
         public static bool operator !=(Shape a, Shape b) => (a.X != b.X) || (a.Y != b.Y);
 
-        protected Shape(int x, int y, Color lc, Color ic)
+        protected Shape(int x, int y)
         {
             this.x = x;
             this.y = y;
-            lineColor = lc;
-            insideColor = ic;
         }
 
         static Shape()
@@ -102,7 +100,7 @@ namespace pr5
     [Serializable]
     class Circle : Shape
     {
-        public Circle(int x, int y, Color lc, Color ic) : base(x, y, lc, ic)
+        public Circle(int x, int y) : base(x, y)
         {
         }
 
@@ -123,7 +121,7 @@ namespace pr5
     [Serializable]
     class Square : Shape
     {
-        public Square(int x, int y, Color lc, Color ic) : base(x, y, lc, ic)
+        public Square(int x, int y) : base(x, y)
         {
         }
 
@@ -152,7 +150,7 @@ namespace pr5
     [Serializable]
     class Triangle : Shape
     {
-        public Triangle(int x, int y, Color lc, Color ic) : base(x, y, lc, ic)
+        public Triangle(int x, int y) : base(x, y)
         {
         }
 

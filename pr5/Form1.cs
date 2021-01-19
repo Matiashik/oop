@@ -28,6 +28,7 @@ namespace pr5
         private bool _play = false;
         private int _t = 10;
         private Task _playT;
+        private string _fileN;
 
         #endregion
 
@@ -42,10 +43,14 @@ namespace pr5
             Radius.RChanged += radius_Changed;
             Directory.CreateDirectory("saves");
             File.Create("saves/QuickSave.shp");
+            Shape.InsideColor = _insideColor;
+            Shape.LineColor = _outsideColor;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            Shape.InsideColor = _insideColor;
+            Shape.LineColor = _outsideColor;
             if (_splist.Count >= 3)
             {
                 // ReSharper disable once InconsistentNaming
@@ -132,11 +137,11 @@ namespace pr5
                         spls.Add(p);
                         foreach (var sp in _splist)
                         {
-                            if (Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], sp) >
-                                Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], p)) p = sp;
+                            if (Angle(new Circle(0, spls[0].Y), spls[0], sp) >
+                                Angle(new Circle(0, spls[0].Y), spls[0], p)) p = sp;
                             // ReSharper disable once CompareOfFloatsByEqualityOperator
-                            else if (Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], sp) ==
-                                     Angle(new Circle(0, spls[0].Y, _outsideColor, _insideColor), spls[0], p))
+                            else if (Angle(new Circle(0, spls[0].Y), spls[0], sp) ==
+                                     Angle(new Circle(0, spls[0].Y), spls[0], p))
                                 if (Dist(spls[0], sp) > Dist(spls[0], p))
                                     p = sp;
                         }
@@ -215,13 +220,13 @@ namespace pr5
                     switch (_shapeType)
                     {
                         case 1:
-                            _splist.Add(new Triangle(e.X, e.Y, _outsideColor, _insideColor));
+                            _splist.Add(new Triangle(e.X, e.Y));
                             break;
                         case 2:
-                            _splist.Add(new Square(e.X, e.Y, _outsideColor, _insideColor));
+                            _splist.Add(new Square(e.X, e.Y));
                             break;
                         default:
-                            _splist.Add(new Circle(e.X, e.Y, _outsideColor, _insideColor));
+                            _splist.Add(new Circle(e.X, e.Y));
                             break;
                     }
 
@@ -287,6 +292,8 @@ namespace pr5
                     fs = new FileStream("saves/QuickSave.shp", FileMode.Create, FileAccess.Write);
                     bf.Serialize(fs, _splist);
                     bf.Serialize(fs, Shape.R);
+                    bf.Serialize(fs, Shape.LineColor);
+                    bf.Serialize(fs, Shape.InsideColor);
                     bf.Serialize(fs, _algorithmType);
                     bf.Serialize(fs, _shapeType);
                     bf.Serialize(fs, _insideColor);
@@ -310,6 +317,8 @@ namespace pr5
 
                     _splist = (List<Shape>) bf.Deserialize(fs);
                     Shape.R = (int) bf.Deserialize(fs);
+                    Shape.LineColor = (Color) bf.Deserialize(fs);
+                    Shape.InsideColor = (Color) bf.Deserialize(fs);
                     _algorithmType = (int) bf.Deserialize(fs);
                     _shapeType = (int) bf.Deserialize(fs);
                     _insideColor = (Color) bf.Deserialize(fs);
@@ -521,10 +530,14 @@ namespace pr5
                     return;
             }
 
+            _fileN = fdg.FileName;
+            this.Text = fdg.FileName;
             var fs = new FileStream(fdg.FileName, FileMode.Create, FileAccess.Write);
             var bf = new BinaryFormatter();
             bf.Serialize(fs, _splist);
             bf.Serialize(fs, Shape.R);
+            bf.Serialize(fs, Shape.LineColor);
+            bf.Serialize(fs, Shape.InsideColor);
             bf.Serialize(fs, _algorithmType);
             bf.Serialize(fs, _shapeType);
             bf.Serialize(fs, _insideColor);
@@ -561,9 +574,12 @@ namespace pr5
             }
 
             // ReSharper disable once AssignNullToNotNullAttribute
-
+            _fileN = fdg.FileName;
+            this.Text = fdg.FileName;
             _splist = (List<Shape>) bf.Deserialize(fs);
             Shape.R = (int) bf.Deserialize(fs);
+            Shape.LineColor = (Color) bf.Deserialize(fs);
+            Shape.InsideColor = (Color) bf.Deserialize(fs);
             _algorithmType = (int) bf.Deserialize(fs);
             _shapeType = (int) bf.Deserialize(fs);
             _insideColor = (Color) bf.Deserialize(fs);
@@ -599,12 +615,52 @@ namespace pr5
             Refresh();
         }
 
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (_fileN == null)
+            {
+                saveToolStripMenuItem_Click(null, null);
+                return;
+            }
+
+            var fs = new FileStream(_fileN, FileMode.Create, FileAccess.Write);
+            var bf = new BinaryFormatter();
+            bf.Serialize(fs, _splist);
+            bf.Serialize(fs, Shape.R);
+            bf.Serialize(fs, Shape.LineColor);
+            bf.Serialize(fs, Shape.InsideColor);
+            bf.Serialize(fs, _algorithmType);
+            bf.Serialize(fs, _shapeType);
+            bf.Serialize(fs, _insideColor);
+            bf.Serialize(fs, _outsideColor);
+            bf.Serialize(fs, toolStripTextBox1.Text);
+            bf.Serialize(fs, _play);
+            fs.Close();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _fileN = null;
+            _splist = new List<Shape>();
+            jarvisToolStripMenuItem_Click(null, null);
+            Shape.R = 30;
+            circleToolStripMenuItem_Click(null, null);
+            defaultToolStripMenuItem_Click(null, null);
+            // ReSharper disable once LocalizableElement
+            this.Text = "New";
+            Refresh();
+        }
+
         #endregion
 
         private void radius_Changed(int r)
         {
             Shape.R = r;
             Refresh();
+        }
+
+        private void check()
+        {
         }
     }
 }
