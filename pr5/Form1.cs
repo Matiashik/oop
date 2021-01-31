@@ -29,6 +29,7 @@ namespace pr5
         private int _t = 10;
         private Task _playT;
         private string _fileN;
+        private bool _changed = false;
 
         #endregion
 
@@ -250,6 +251,7 @@ namespace pr5
                                 sp.Dif = (e.X - sp.X, e.Y - sp.Y);
                             }
                     }
+                    else _changed = true;
 
                     break;
 
@@ -261,6 +263,7 @@ namespace pr5
                             break;
                         }
 
+                    _changed = true;
                     Refresh();
                     break;
             }
@@ -278,7 +281,11 @@ namespace pr5
         {
             foreach (var el in _splist)
                 if (el.IsPressed)
+                {
                     (el.X, el.Y) = (e.X - el.Dif.dx, e.Y - el.Dif.dy);
+                    _changed = true;
+                }
+
             Refresh();
         }
 
@@ -301,6 +308,7 @@ namespace pr5
                     bf.Serialize(fs, toolStripTextBox1.Text);
                     bf.Serialize(fs, _play);
                     fs.Close();
+                    _changed = false;
                     break;
 
                 case Keys.F6:
@@ -351,6 +359,7 @@ namespace pr5
                     }
 
                     fs.Close();
+                    _changed = false;
                     Refresh();
                     break;
             }
@@ -406,14 +415,22 @@ namespace pr5
         private void linesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
                 _outsideColor = colorDialog1.Color;
+                _changed = true;
+            }
+
             Refresh();
         }
 
         private void insideToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                _changed = true;
                 _insideColor = colorDialog1.Color;
+            }
+
             Refresh();
         }
 
@@ -421,6 +438,7 @@ namespace pr5
         {
             _insideColor = DefaultBackColor;
             _outsideColor = Color.Black;
+            _changed = true;
             Refresh();
         }
 
@@ -440,6 +458,8 @@ namespace pr5
 
         private void toolStripPlay_Click(object sender, EventArgs e)
         {
+            _changed = true;
+
             void Play()
             {
                 var r = new Random();
@@ -545,6 +565,7 @@ namespace pr5
             bf.Serialize(fs, toolStripTextBox1.Text);
             bf.Serialize(fs, _play);
             fs.Close();
+            _changed = false;
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -612,6 +633,7 @@ namespace pr5
             }
 
             fs.Close();
+            _changed = false;
             Refresh();
         }
 
@@ -636,10 +658,13 @@ namespace pr5
             bf.Serialize(fs, toolStripTextBox1.Text);
             bf.Serialize(fs, _play);
             fs.Close();
+            _changed = false;
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (_changed) ChangeHandler();
+
             _fileN = null;
             _splist = new List<Shape>();
             jarvisToolStripMenuItem_Click(null, null);
@@ -648,6 +673,7 @@ namespace pr5
             defaultToolStripMenuItem_Click(null, null);
             // ReSharper disable once LocalizableElement
             this.Text = "New";
+            _changed = false;
             Refresh();
         }
 
@@ -656,11 +682,23 @@ namespace pr5
         private void radius_Changed(int r)
         {
             Shape.R = r;
+            _changed = true;
             Refresh();
         }
 
-        private void check()
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (_changed) ChangeHandler();
+        }
+
+        private void ChangeHandler()
+        {
+            if (MessageBox.Show("Вы не сохранили изменения. Сохранить?", "Save changes",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if (_fileN == null) saveToolStripMenuItem_Click(null, null);
+                else saveToolStripMenuItem1_Click(null, null);
+            }
         }
     }
 }

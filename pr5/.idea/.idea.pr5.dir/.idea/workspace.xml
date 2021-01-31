@@ -22,7 +22,26 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4608ad1-fe81-400f-b1cd-399ac32dcc9e" name="Default Changelist" comment="" />
+    <list default="true" id="a4608ad1-fe81-400f-b1cd-399ac32dcc9e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../pr4/bin/Debug/pr4.exe.config" beforeDir="false" afterPath="$PROJECT_DIR$/../pr4/bin/Debug/pr4.exe.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pr4/obj/Debug/pr4.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../pr4/obj/Debug/pr4.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pr4/obj/Debug/pr4.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../pr4/obj/Debug/pr4.csproj.GenerateResource.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pr4/obj/Debug/pr4.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../pr4/obj/Debug/pr4.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pr5.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Radius.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Radius.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/pr5.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/pr5.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/saves/Ex.shp" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/saves/Ex.shp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/saves/QuickSave.shp" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/saves/QuickSave.shp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.csproj.GenerateResource.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/pr5.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/pr5.pdb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,9 +57,9 @@
         <option value="$PROJECT_DIR$/Popup.Designer.cs" />
         <option value="$PROJECT_DIR$/Radius.Designer.cs" />
         <option value="$PROJECT_DIR$/Radius.cs" />
-        <option value="$PROJECT_DIR$/Form1.Designer.cs" />
         <option value="$PROJECT_DIR$/Shape.cs" />
         <option value="$PROJECT_DIR$/Form1.cs" />
+        <option value="$PROJECT_DIR$/Form1.Designer.cs" />
       </list>
     </option>
   </component>
@@ -61,7 +80,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunManager">
     <configuration name="pr5" type="DotNetProject" factoryName=".NET Project">
@@ -158,6 +177,7 @@
       <workItem from="1611040948215" duration="163000" />
       <workItem from="1611042134123" duration="698000" />
       <workItem from="1611044005215" duration="1773000" />
+      <workItem from="1612080312235" duration="1871000" />
     </task>
     <servers />
   </component>
@@ -180,26 +200,26 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1555" height="238" key="GridCell.Tab.0.bottom" timestamp="1611045800269">
-      <screen x="0" y="0" width="1600" height="900" />
+    <state width="1741" height="214" key="GridCell.Tab.0.bottom" timestamp="1612081914055">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.bottom/0.0.1600.900@0.0.1600.900" timestamp="1611045800269" />
-    <state width="1741" height="394" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1609404281438" />
-    <state width="1555" height="238" key="GridCell.Tab.0.center" timestamp="1611045800269">
-      <screen x="0" y="0" width="1600" height="900" />
+    <state width="1741" height="214" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1612081914055" />
+    <state width="1741" height="214" key="GridCell.Tab.0.center" timestamp="1612081914054">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.center/0.0.1600.900@0.0.1600.900" timestamp="1611045800269" />
-    <state width="1741" height="394" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1609404281438" />
-    <state width="1555" height="238" key="GridCell.Tab.0.left" timestamp="1611045800269">
-      <screen x="0" y="0" width="1600" height="900" />
+    <state width="1741" height="214" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1612081914054" />
+    <state width="1741" height="214" key="GridCell.Tab.0.left" timestamp="1612081914054">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.left/0.0.1600.900@0.0.1600.900" timestamp="1611045800269" />
-    <state width="1741" height="394" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1609404281438" />
-    <state width="1555" height="238" key="GridCell.Tab.0.right" timestamp="1611045800269">
-      <screen x="0" y="0" width="1600" height="900" />
+    <state width="1741" height="214" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1612081914054" />
+    <state width="1741" height="214" key="GridCell.Tab.0.right" timestamp="1612081914054">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1555" height="238" key="GridCell.Tab.0.right/0.0.1600.900@0.0.1600.900" timestamp="1611045800269" />
-    <state width="1741" height="394" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1609404281438" />
+    <state width="1741" height="214" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1612081914054" />
     <state width="1741" height="394" key="GridCell.Tab.1.bottom" timestamp="1609404281438">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
@@ -264,6 +284,10 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1741" height="394" key="GridCell.Tab.4.right/0.0.2560.1440@0.0.2560.1440" timestamp="1609404281438" />
+    <state x="849" y="369" key="SettingsEditor" timestamp="1612081778276">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="849" y="369" key="SettingsEditor/0.0.2560.1440@0.0.2560.1440" timestamp="1612081778276" />
     <state x="979" y="392" key="ToolboxManager" timestamp="1609402952783">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>

@@ -6,7 +6,9 @@ namespace pr5
     public partial class Radius : Form
     {
         public delegate void RHandler(int r);
+
         public static event RHandler RChanged;
+
         public Radius()
         {
             InitializeComponent();
