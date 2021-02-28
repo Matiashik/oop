@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using pr5Lib;
 
 namespace pr5
 {
@@ -22,13 +23,12 @@ namespace pr5
 
         private int _shapeType;
         private int _algorithmType;
-        private Color _outsideColor = Color.Black;
-        private Color _insideColor = DefaultBackColor;
         private Form _radius;
         private bool _play = false;
         private int _t = 10;
         private Task _playT;
         private string _fileN;
+        private (int x, int y, bool t) _mouseS;
         private bool _changed = false;
 
         #endregion
@@ -44,24 +44,14 @@ namespace pr5
             Radius.RChanged += radius_Changed;
             Directory.CreateDirectory("saves");
             File.Create("saves/QuickSave.shp");
-            Shape.InsideColor = _insideColor;
-            Shape.LineColor = _outsideColor;
+            Shape.InsideColor = DefaultBackColor;
+            Shape.LineColor = Color.Black;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Shape.InsideColor = _insideColor;
-            Shape.LineColor = _outsideColor;
             if (_splist.Count >= 3)
             {
-                // ReSharper disable once InconsistentNaming
-                void swap(int a, int b)
-                {
-                    var c = _splist[a];
-                    _splist[a] = _splist[b];
-                    _splist[b] = c;
-                }
-
                 var spls = new List<Shape>();
 
                 if (_algorithmType == 1)
@@ -179,18 +169,24 @@ namespace pr5
                     }
                 }
 
+                int m = 1;
+
                 for (int f = 0; f < _splist.Count; f++)
                 {
                     var sp = _splist[f];
                     if (!sp.IsTop && !sp.IsPressed)
                     {
+                        if(!_mouseS.t) new Remove(sp, f);
                         _splist.RemoveAt(f);
+                        m++;
                         continue;
                     }
 
                     sp.Draw(e.Graphics);
                     sp.IsTop = false;
                 }
+
+                if (m > 1) new Multi(m);
             }
             else
                 foreach (var sp in _splist)
@@ -207,6 +203,7 @@ namespace pr5
                     foreach (var sp in _splist)
                         if (sp.IsInside(e.X, e.Y))
                         {
+                            _mouseS = (e.X, e.Y, false);
                             for (int i = 0; i < _splist.Count; i++)
                                 if (_splist[i].IsInside(e.X, e.Y))
                                 {
@@ -231,6 +228,7 @@ namespace pr5
                             break;
                     }
 
+                    new Add(_splist[_splist.Count - 1], _splist.Count - 1);
                     Refresh();
                     if (spls.Count == _splist.Count)
                     {
@@ -245,20 +243,25 @@ namespace pr5
                         }
 
                         if (fl)
+                        {
+                            Do.Back.Peek().Undo(ref _splist);
+                            _mouseS = (e.X, e.Y, true);
                             foreach (var sp in _splist)
                             {
                                 sp.IsPressed = true;
                                 sp.Dif = (e.X - sp.X, e.Y - sp.Y);
                             }
+                        }
                     }
                     else _changed = true;
-
+                    
                     break;
 
                 case MouseButtons.Right:
                     for (int i = _splist.Count - 1; i >= 0; i--)
                         if (_splist[i].IsInside(e.X, e.Y))
                         {
+                            new Remove(_splist[i], i);
                             _splist.RemoveAt(i);
                             break;
                         }
@@ -271,10 +274,24 @@ namespace pr5
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
+            if (_mouseS.t) new DoMove(_mouseS.x - e.X, _mouseS.y - e.Y);
+            int m = 0;
             foreach (var el in _splist)
+            {
                 if (el.IsPressed)
+                {
+                    if (!_mouseS.t)
+                    {
+                        new DoSinMove(_mouseS.x - e.X, _mouseS.y - e.Y, _splist.IndexOf(el));
+                        m++;
+                    }
                     el.IsPressed = false;
+                }
+            }
+
+            if (!_mouseS.t && m > 0) new Multi(m);
             Refresh();
+            _mouseS.t = false;
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -303,8 +320,6 @@ namespace pr5
                     bf.Serialize(fs, Shape.InsideColor);
                     bf.Serialize(fs, _algorithmType);
                     bf.Serialize(fs, _shapeType);
-                    bf.Serialize(fs, _insideColor);
-                    bf.Serialize(fs, _outsideColor);
                     bf.Serialize(fs, toolStripTextBox1.Text);
                     bf.Serialize(fs, _play);
                     fs.Close();
@@ -329,8 +344,6 @@ namespace pr5
                     Shape.InsideColor = (Color) bf.Deserialize(fs);
                     _algorithmType = (int) bf.Deserialize(fs);
                     _shapeType = (int) bf.Deserialize(fs);
-                    _insideColor = (Color) bf.Deserialize(fs);
-                    _outsideColor = (Color) bf.Deserialize(fs);
                     toolStripTextBox1.Text = (string) bf.Deserialize(fs);
                     _play = (bool) bf.Deserialize(fs);
 
@@ -414,10 +427,13 @@ namespace pr5
 
         private void linesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var a = Shape.LineColor;
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
-                _outsideColor = colorDialog1.Color;
+                Shape.LineColor = colorDialog1.Color;
                 _changed = true;
+                // ReSharper disable once ObjectCreationAsStatement
+                new CColor(Shape.InsideColor, Shape.InsideColor, a, Shape.LineColor);
             }
 
             Refresh();
@@ -425,10 +441,13 @@ namespace pr5
 
         private void insideToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var a = Shape.InsideColor;
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 _changed = true;
-                _insideColor = colorDialog1.Color;
+                Shape.InsideColor = colorDialog1.Color;
+                // ReSharper disable once ObjectCreationAsStatement
+                new CColor(a, Shape.InsideColor, Shape.LineColor, Shape.LineColor);
             }
 
             Refresh();
@@ -436,8 +455,8 @@ namespace pr5
 
         private void defaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _insideColor = DefaultBackColor;
-            _outsideColor = Color.Black;
+            Shape.InsideColor = DefaultBackColor;
+            Shape.LineColor = Color.Black;
             _changed = true;
             Refresh();
         }
@@ -560,8 +579,6 @@ namespace pr5
             bf.Serialize(fs, Shape.InsideColor);
             bf.Serialize(fs, _algorithmType);
             bf.Serialize(fs, _shapeType);
-            bf.Serialize(fs, _insideColor);
-            bf.Serialize(fs, _outsideColor);
             bf.Serialize(fs, toolStripTextBox1.Text);
             bf.Serialize(fs, _play);
             fs.Close();
@@ -603,8 +620,6 @@ namespace pr5
             Shape.InsideColor = (Color) bf.Deserialize(fs);
             _algorithmType = (int) bf.Deserialize(fs);
             _shapeType = (int) bf.Deserialize(fs);
-            _insideColor = (Color) bf.Deserialize(fs);
-            _outsideColor = (Color) bf.Deserialize(fs);
             toolStripTextBox1.Text = (string) bf.Deserialize(fs);
             _play = (bool) bf.Deserialize(fs);
 
@@ -653,8 +668,6 @@ namespace pr5
             bf.Serialize(fs, Shape.InsideColor);
             bf.Serialize(fs, _algorithmType);
             bf.Serialize(fs, _shapeType);
-            bf.Serialize(fs, _insideColor);
-            bf.Serialize(fs, _outsideColor);
             bf.Serialize(fs, toolStripTextBox1.Text);
             bf.Serialize(fs, _play);
             fs.Close();
@@ -674,6 +687,35 @@ namespace pr5
             // ReSharper disable once LocalizableElement
             this.Text = "New";
             _changed = false;
+            Refresh();
+        }
+
+        private void toolStripLabel1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Debug.WriteLine("{{{" + Do.Back.Peek().GetType() + "}}}");
+                Do.Back.Peek().Undo(ref _splist);
+            }
+            catch (Exception exception)
+            {
+                // ignored
+            }
+
+            Refresh();
+        }
+
+        private void toolStripLabel2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Do.Forw.Peek().Redo(ref _splist);
+            }
+            catch (Exception exception)
+            {
+                // ignored
+            }
+
             Refresh();
         }
 

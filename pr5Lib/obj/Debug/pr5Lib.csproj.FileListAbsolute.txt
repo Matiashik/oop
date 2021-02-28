@@ -1,0 +1,8 @@
+C:\myfo\oop\pr5Lib\bin\Debug\pr5Lib.dll
+C:\myfo\oop\pr5Lib\bin\Debug\pr5Lib.pdb
+C:\myfo\oop\pr5Lib\obj\Debug\pr5Lib.csprojAssemblyReference.cache
+C:\myfo\oop\pr5Lib\obj\Debug\pr5Lib.csproj.CoreCompileInputs.cache
+C:\myfo\oop\pr5Lib\obj\Debug\pr5Lib.dll
+C:\myfo\oop\pr5Lib\obj\Debug\pr5Lib.pdb
+C:\myfo\oop\pr5Lib\bin\Debug\System.Drawing.Common.dll
+C:\myfo\oop\pr5Lib\obj\Debug\pr5Lib.csproj.CopyComplete

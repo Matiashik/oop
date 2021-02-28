@@ -7,6 +7,9 @@
       <e p="Form1.cs" t="Include" />
       <e p="Form1.Designer.cs" t="Include" />
       <e p="Form1.resx" t="Include" />
+      <e p="lib" t="Include">
+        <e p="pr5Lib.dll" t="Include" />
+      </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="pr5.csproj" t="IncludeRecursive" />
@@ -21,7 +24,6 @@
       <e p="Radius.cs" t="Include" />
       <e p="Radius.Designer.cs" t="Include" />
       <e p="Radius.resx" t="Include" />
-      <e p="Shape.cs" t="Include" />
     </e>
     <e p="C:\Users\solom\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
     <e p="C:\Users\solom\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_.19.00" t="ExcludeRecursive" />

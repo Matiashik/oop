@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using pr5Lib;
+
 namespace pr5
 {
     partial class Radius
