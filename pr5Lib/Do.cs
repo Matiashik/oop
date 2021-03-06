@@ -12,6 +12,15 @@ namespace pr5Lib
         public abstract void Undo(ref List<Shape> splist);
         public static Stack<Do> Back = new Stack<Do>();
         public abstract void Redo(ref List<Shape> splist);
+        public virtual int GetVal()
+        {
+            return -1;
+        }
+
+        public virtual void SetVal(int val)
+        {
+            return;
+        }
     }
 
     public class DoSinMove : Do
@@ -142,22 +151,27 @@ namespace pr5Lib
     
     public class R : Do
     {
+        public delegate void Ndo();
+        public static event Ndo RNdo;
+        
         private int _d;
 
         public override void Redo(ref List<Shape> splist)
         {
             Back.Push(Forw.Pop());
             int r = 0 - _d;
-            Shape.R += _d;
+            Shape.R -= _d;
             _d = r;
+            RNdo.Invoke();
         }
 
         public override void Undo(ref List<Shape> splist)
         {
             Forw.Push(Back.Pop());
             int r = 0 - _d;
-            Shape.R += _d;
+            Shape.R -= _d;
             _d = r;
+            RNdo.Invoke();
         }
 
         public R(int d)
@@ -165,6 +179,16 @@ namespace pr5Lib
             _d = d;
             Back.Push(this);
             Forw.Clear();
+        }
+
+        public override int GetVal()
+        {
+            return _d;
+        }
+
+        public override void SetVal(int val)
+        {
+            _d = val;
         }
     }
     

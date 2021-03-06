@@ -42,6 +42,7 @@ namespace pr5
             jarvisToolStripMenuItem.Checked = true;
             KeyPreview = true;
             Radius.RChanged += radius_Changed;
+            R.RNdo += () => { _radius?.Invalidate(); };
             Directory.CreateDirectory("saves");
             File.Create("saves/QuickSave.shp");
             Shape.InsideColor = DefaultBackColor;
