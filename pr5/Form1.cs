@@ -43,12 +43,21 @@ namespace pr5
             KeyPreview = true;
             Radius.RChanged += radius_Changed;
             R.RNdo += () => { _radius?.Invalidate(); };
-            Directory.CreateDirectory("saves");
+            {
+                var fl = (true, true);
+                foreach (var dir in Directory.GetDirectories(Directory.GetCurrentDirectory()))
+                {
+                    if (dir.Split('\\')[dir.Split('\\').Length - 1] == "saves") fl = (false, fl.Item2);
+                    if (dir.Split('\\')[dir.Split('\\').Length - 1] == "plugins") fl = (fl.Item1, false);
+                }
+                if (fl.Item1) Directory.CreateDirectory("saves");
+                if (fl.Item2) Directory.CreateDirectory("plugins");
+            }
             File.Create("saves/QuickSave.shp");
             Shape.InsideColor = DefaultBackColor;
             Shape.LineColor = Color.Black;
         }
-
+    
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (_splist.Count >= 3)
