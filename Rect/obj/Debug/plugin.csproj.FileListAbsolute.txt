@@ -1,0 +1,10 @@
+C:\myfo\oop\plugin\bin\Debug\plugin.dll
+C:\myfo\oop\plugin\bin\Debug\plugin.pdb
+C:\myfo\oop\plugin\bin\Debug\pr5Lib.dll
+C:\myfo\oop\plugin\bin\Debug\System.Drawing.Common.dll
+C:\myfo\oop\plugin\bin\Debug\pr5Lib.pdb
+C:\myfo\oop\plugin\obj\Debug\plugin.csprojAssemblyReference.cache
+C:\myfo\oop\plugin\obj\Debug\plugin.csproj.CoreCompileInputs.cache
+C:\myfo\oop\plugin\obj\Debug\plugin.csproj.CopyComplete
+C:\myfo\oop\plugin\obj\Debug\plugin.dll
+C:\myfo\oop\plugin\obj\Debug\plugin.pdb

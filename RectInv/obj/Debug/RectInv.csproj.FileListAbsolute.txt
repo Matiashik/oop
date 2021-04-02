@@ -1,0 +1,10 @@
+C:\myfo\oop\RectInv\bin\Debug\RectInv.dll
+C:\myfo\oop\RectInv\bin\Debug\RectInv.pdb
+C:\myfo\oop\RectInv\bin\Debug\pr5Lib.dll
+C:\myfo\oop\RectInv\bin\Debug\System.Drawing.Common.dll
+C:\myfo\oop\RectInv\bin\Debug\pr5Lib.pdb
+C:\myfo\oop\RectInv\obj\Debug\RectInv.csprojAssemblyReference.cache
+C:\myfo\oop\RectInv\obj\Debug\RectInv.csproj.CoreCompileInputs.cache
+C:\myfo\oop\RectInv\obj\Debug\RectInv.csproj.CopyComplete
+C:\myfo\oop\RectInv\obj\Debug\RectInv.dll
+C:\myfo\oop\RectInv\obj\Debug\RectInv.pdb

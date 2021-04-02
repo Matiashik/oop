@@ -12,3 +12,4 @@ C:\myfo\oop\pr5\obj\Debug\pr5.Radius.resources
 C:\myfo\oop\pr5\bin\Debug\pr5Lib.dll
 C:\myfo\oop\pr5\obj\Debug\pr5.csproj.CopyComplete
 C:\myfo\oop\pr5\bin\Debug\pr5Lib.pdb
+C:\myfo\oop\pr5\bin\Debug\System.Drawing.Common.dll

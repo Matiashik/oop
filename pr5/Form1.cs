@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using pr5Lib;
+using System.Reflection;
 
 namespace pr5
 {
@@ -20,6 +21,7 @@ namespace pr5
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         // ReSharper disable once IdentifierTypo
         List<Shape> _splist = new List<Shape>(); //shapes
+        List<object> _externalTypes = new List<object>();
 
         private int _shapeType;
         private int _algorithmType;
@@ -50,14 +52,62 @@ namespace pr5
                     if (dir.Split('\\')[dir.Split('\\').Length - 1] == "saves") fl = (false, fl.Item2);
                     if (dir.Split('\\')[dir.Split('\\').Length - 1] == "plugins") fl = (fl.Item1, false);
                 }
+
                 if (fl.Item1) Directory.CreateDirectory("saves");
                 if (fl.Item2) Directory.CreateDirectory("plugins");
+                else
+                {
+                    foreach (var i in Directory.GetFiles("plugins"))
+                    {
+                        try
+                        {
+                            var fil = i.Split('\\')[1];
+                            Debug.WriteLine(fil);
+                            if (fil.Split('.')[1] != "dll") throw new Exception(fil);
+                            fil = fil.Split('.')[0];
+                            var ass = Assembly.LoadFrom($"plugins/{fil}.dll");
+                            var res = ass.GetType($"{fil}").GetMethod("Copy").Invoke(
+                                ass.CreateInstance($"{fil}"), new object[] {});
+                            _externalTypes.Add(res);
+                            {
+                                var tl = new System.Windows.Forms.ToolStripMenuItem();
+                                tl.Name = res.ToString();
+                                tl.Size = new System.Drawing.Size(152, 22);
+                                tl.Text = res.ToString();
+                                tl.Click += new System.EventHandler((object e, EventArgs g) =>
+                                {
+                                    for (int j = 0; j < shapeToolStripMenuItem.DropDownItems.Count - 1; j++)
+                                    {
+                                        var b = (ToolStripMenuItem) shapeToolStripMenuItem.DropDownItems[j];
+                                        b.Checked = false;
+                                        shapeToolStripMenuItem.DropDownItems.RemoveAt(j);
+                                        shapeToolStripMenuItem.DropDownItems.Insert(j, b);
+                                    }
+                                    var c = shapeToolStripMenuItem.DropDownItems.IndexOf(tl);
+                                    var r = (ToolStripMenuItem) shapeToolStripMenuItem.DropDownItems[c];
+                                    r.Checked = true;
+                                    shapeToolStripMenuItem.DropDownItems.Insert(c, r);
+                                    _shapeType = c;
+                                });
+                                shapeToolStripMenuItem.DropDownItems.Add(tl);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            if (MessageBox.Show(
+                                    "В папке плагинов обнаружен инородный файл " + ex.Message +
+                                    ". Ликвидировать его?",
+                                    "Файл", MessageBoxButtons.YesNo) ==
+                                DialogResult.Yes) File.Delete(i);
+                        }
+                    }
+                }
             }
             File.Create("saves/QuickSave.shp");
             Shape.InsideColor = DefaultBackColor;
             Shape.LineColor = Color.Black;
         }
-    
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (_splist.Count >= 3)
@@ -186,7 +236,7 @@ namespace pr5
                     var sp = _splist[f];
                     if (!sp.IsTop && !sp.IsPressed)
                     {
-                        if(!_mouseS.t) new Remove(sp, f);
+                        if (!_mouseS.t) new Remove(sp, f);
                         _splist.RemoveAt(f);
                         m++;
                         continue;
@@ -227,6 +277,9 @@ namespace pr5
                     var spls = _splist.ToList();
                     switch (_shapeType)
                     {
+                        case 0:
+                            _splist.Add(new Circle(e.X, e.Y));
+                            break;
                         case 1:
                             _splist.Add(new Triangle(e.X, e.Y));
                             break;
@@ -234,7 +287,10 @@ namespace pr5
                             _splist.Add(new Square(e.X, e.Y));
                             break;
                         default:
-                            _splist.Add(new Circle(e.X, e.Y));
+                            var a = ((Shape) _externalTypes[_shapeType - 3]).Copy();
+                            a.X = e.X;
+                            a.Y = e.Y;
+                            _splist.Add(a);
                             break;
                     }
 
@@ -264,7 +320,7 @@ namespace pr5
                         }
                     }
                     else _changed = true;
-                    
+
                     break;
 
                 case MouseButtons.Right:
@@ -295,6 +351,7 @@ namespace pr5
                         new DoSinMove(_mouseS.x - e.X, _mouseS.y - e.Y, _splist.IndexOf(el));
                         m++;
                     }
+
                     el.IsPressed = false;
                 }
             }
@@ -752,5 +809,6 @@ namespace pr5
                 else saveToolStripMenuItem1_Click(null, null);
             }
         }
+        
     }
 }

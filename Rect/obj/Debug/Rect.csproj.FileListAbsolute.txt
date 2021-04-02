@@ -1,0 +1,10 @@
+C:\myfo\oop\Rect\bin\Debug\Rect.dll
+C:\myfo\oop\Rect\bin\Debug\Rect.pdb
+C:\myfo\oop\Rect\bin\Debug\pr5Lib.dll
+C:\myfo\oop\Rect\bin\Debug\System.Drawing.Common.dll
+C:\myfo\oop\Rect\bin\Debug\pr5Lib.pdb
+C:\myfo\oop\Rect\obj\Debug\Rect.csprojAssemblyReference.cache
+C:\myfo\oop\Rect\obj\Debug\Rect.csproj.CoreCompileInputs.cache
+C:\myfo\oop\Rect\obj\Debug\Rect.csproj.CopyComplete
+C:\myfo\oop\Rect\obj\Debug\Rect.dll
+C:\myfo\oop\Rect\obj\Debug\Rect.pdb

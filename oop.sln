@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pr5", "pr5\pr5.csproj", "{A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pr5Lib", "pr5Lib\pr5Lib.csproj", "{E3EF4AA4-3BD3-4B94-8DB9-FC9DAE7E09BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rect", "Rect\Rect.csproj", "{FE4151F8-62ED-4B81-8C98-6D3935C040D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RectInv", "RectInv\RectInv.csproj", "{81282755-EA3C-4ABB-976F-744012EB3DFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{E3EF4AA4-3BD3-4B94-8DB9-FC9DAE7E09BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3EF4AA4-3BD3-4B94-8DB9-FC9DAE7E09BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3EF4AA4-3BD3-4B94-8DB9-FC9DAE7E09BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE4151F8-62ED-4B81-8C98-6D3935C040D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE4151F8-62ED-4B81-8C98-6D3935C040D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE4151F8-62ED-4B81-8C98-6D3935C040D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE4151F8-62ED-4B81-8C98-6D3935C040D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81282755-EA3C-4ABB-976F-744012EB3DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81282755-EA3C-4ABB-976F-744012EB3DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81282755-EA3C-4ABB-976F-744012EB3DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81282755-EA3C-4ABB-976F-744012EB3DFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

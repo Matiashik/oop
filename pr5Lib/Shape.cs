@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace pr5Lib
 {
+    /// <summary>
+    /// Плагин должен состоять из 1 файла, содержащего в себе описание класса, наследуемого от Shape.
+    /// Название файла соответствует названию класса ровно как и общему названию плагина.
+    /// </summary>
     [Serializable]
     public abstract class Shape
     {
@@ -94,6 +98,13 @@ namespace pr5Lib
         }
 
         public virtual bool IsInside(int x1, int y1) => false;
+        
+        /// <summary>
+        /// Возвращает условную копию объекта по его значениям.
+        /// </summary>
+        /// <returns>new [ShapeName](x, y).</returns>
+        public abstract Shape Copy();
+
     }
 
     [Serializable]
@@ -114,6 +125,11 @@ namespace pr5Lib
         {
             graphics.DrawEllipse(new Pen(lineColor, 2), x - R, y - R, 2 * R, 2 * R);
             graphics.FillEllipse(new SolidBrush(insideColor), x - R, y - R, 2 * R, 2 * R);
+        }
+
+        public override Shape Copy()
+        {
+            return new Circle(x, y);
         }
     }
 
@@ -143,6 +159,11 @@ namespace pr5Lib
                 if (y1 >= y - len / 2 && y1 <= y + len / 2)
                     return true;
             return false;
+        }
+
+        public override Shape Copy()
+        {
+            return new Square(x, y);
         }
     }
 
@@ -188,6 +209,11 @@ namespace pr5Lib
                                 Dis((x - R * (float) Math.Sin(1.0472), y + R / 2), (x, y - R)),
                                 Dis((x + R * (float) Math.Sin(1.0472), y + R / 2),
                                     (x - R * (float) Math.Sin(1.0472), y + R / 2)))) < 0.0001;
+        }
+
+        public override Shape Copy()
+        {
+            return new Triangle(x, y);
         }
     }
 }

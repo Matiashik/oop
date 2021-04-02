@@ -116,21 +116,21 @@ namespace pr5
             // circleToolStripMenuItem
             // 
             this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
-            this.circleToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.circleToolStripMenuItem.Text = "Circle";
             this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
             // 
             // triangleToolStripMenuItem
             // 
             this.triangleToolStripMenuItem.Name = "triangleToolStripMenuItem";
-            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.triangleToolStripMenuItem.Text = "Triangle";
             this.triangleToolStripMenuItem.Click += new System.EventHandler(this.triangleToolStripMenuItem_Click);
             // 
             // squareToolStripMenuItem
             // 
             this.squareToolStripMenuItem.Name = "squareToolStripMenuItem";
-            this.squareToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.squareToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.squareToolStripMenuItem.Text = "Square";
             this.squareToolStripMenuItem.Click += new System.EventHandler(this.squareToolStripMenuItem_Click);
             // 
@@ -238,7 +238,7 @@ namespace pr5
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(34, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(36, 22);
             this.toolStripLabel1.Text = "Undo";
             this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
             // 
